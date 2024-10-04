@@ -1,4 +1,14 @@
-Title: How to enable inexpensive reproducibility for computational experiments?
+---
+title: How to enable inexpensive reproducibility for computational experiments
+author: Samuel Grayson
+date: 2024 Oct 03
+bibliography: zotero.yaml
+geometry:
+- top=1in
+- bottom=1in
+- left=1.5in
+- right=1.5in
+---
 
 # Problem
 
@@ -6,7 +16,7 @@ Reproducibility of scientific experiments is important for three reasons:
 
 1. The scientific community corrects false claims by applying scrutiny to each others' experiments.
    Scrutinizing an experiment often includes reproducing it.
-   Therefore, reproducible experiments may be thoroughly scrutinized and defended.
+   Therefore, reproducible experiments may be thoroughly scrutinized.
 
 2. Science works by building off of the work of others.
    Often in extending anothers work, one needs to execute a modified version of their experiment.
@@ -17,58 +27,22 @@ Reproducibility of scientific experiments is important for three reasons:
    Applying a novel technique on new data involves reproducing a part of the experiment which established the novel technique.
    Therefore, reproducible experiments may be easier to apply in practice.
 
-TODO: Popper defined reproducibility as a criterion for distinguishing between science and pseudoscience (Hill, 2019 in https://arxiv.org/pdf/2402.07530).
+<!-- TODO
+Popper defined reproducibility as a criterion for distinguishing between science and pseudoscience (Hill, 2019 in https://arxiv.org/pdf/2402.07530).
+-->
 
 Reproducibility also has costs, primarily in human labor needed to explain the experiment beyond that which would be needed to merely disseminate the results.
-Working scientists balance the cost of reproducibility with the benefits to society or to themselves (to some extent, benefit to society yields benefit to themselves due to societal incentives).
+Working scientists balance the cost of reproducibility with the benefits to society or to themselves.
 
 In real-world experiments, there are an infinitude of possible factors that must be controlled to find the desired result; it would be unfathomable that two instantiations of an experiment could give exactly identical results.
 In contrast, for computational science experiments (from here on, **CS Exp**) on digital computers, while there are still many factors to be controlled, perfect reproduction is quite fathomable.
 Despite this apparent advantage, CS Exps on digital computers still suffer low rates of reproducibility.
 
-``` python
-import matplotlib, numpy
-fig = matplotlib.Figure()
-ax = fig.add_subplot()
-xmax = 2
-xs = numpy.linspace(0, xmax, 100)
-ys = 1 / xs
-ax.plot(xs, ys)
-ax.set_xlim(0, xmax)
-ax.set_ylim(0, 1 / xmax)
-ax.set_xlabel("Effort")
-ax.set_ylabel("Reproducibility")
-ax.set_xticks([])
-ax.set_yticks([])
-fi.set_title("General shape of effort-vs-reproducibility for one CSE")
-
-# Move the left and bottom spines to x = 0 and y = 0, respectively.
-ax.spines[["left", "bottom"]].set_position(("data", 0))
-
-# Hide the top and right spines.
-ax.spines[["top", "right"]].set_visible(False)
-
-for axis_min, axis_max, transform in [
-        (1, 0, ax.get_yaxis_transform()),
-        (0, 1, ax.get_xaxis_transform()),
-    ]:
-    ax.plot(
-        axis_min,
-        axis_max,
-        ls="",
-        marker=">",
-        ms=10,
-        color="k",
-        transform=transform,
-        clip_on=False,
-    )
-
-fig
-```
+![Effort-vs-reproducibility tradeoff curve in the status quo and with reproducibility tools](./plot0.pdf){#fig:effort width=50%}
 
 The status quo will not change simply by arguing for reproducibility; those arguments are widely known are already taken into account by the efficient market.
 Nor do I have the power to change incentives in science funding policy.
-However, by reducing the cost of reproducibility, scientists may produce more reproducible experiments with the same effort.
+However, by reducing the cost of reproducibility, scientists may produce more reproducible experiments with the same effort ([@fig:effort]).
 Reducing the cost is a technical problem this work attempts to solve.
 
 For the purposes of this work, "computational scientist" (from here on, **CS**) should be construed broadly, as anyone who uses research software to carry out some investigation.
@@ -77,24 +51,38 @@ The term applies to professors in academia as well as analysts in a national lab
 
 # Background
 
-For the purposes of this work, we use the ACM definition of reproducibility:
+There have been conflicting sets of definitions for the terms _repeatability_, _reproducibility_, _replicability_ [@plesserReproducibilityVsReplicability2018].
+Fortuantely, there is a consensus forming lately.
+The National Academies of Science, Engineering, and Medicine gave the following definition:
+
+> **Reproducibility**: obtaining consistent computational results using the same input data, computational steps, methods, code, and conditions of analysis.
+>
+> --- [@committeeonreproducibilityandreplicabilityinscienceReproducibilityReplicabilityScience2019]
+
+The Association of Computing Machinery gave a compatible definition,
 
 > **Reproducibility**:
 > (different team, same experimental setup)
 > The measurement can be obtained with stated precision by a different team using the same measurement procedure, the same measuring system, under the same operating conditions, in the same or a different location on multiple trials.
 >
-> ---[@acminc.staffArtifactReviewBadging2020]
+> --- [@acmincstaff]
 
-This is substantially similar to the National Academy of Sciences:
+This is opposed to **repeatability** (same team, same experimental setup) and **replicability** (different team, different experimental setup).
 
-> **Reproducibility** means computational reproducibility—obtaining consistent computational results using the same input data, computational steps, methods, code, and conditions of analysis.
->
-> ---TODO: cite
+The ACM definition references more useful auxiliary terms, such as measurement procedure, operating conditions, stated precision, etc., so we will use that one for this work.
 
 Naïvely, every CSE would be "reproducible", since there is some, possibly unknown, set of conditions under which another team can make the measurement; i.e., "make your environment bit-wise the same as ours".
 To prevent the definition from being vacuous, we will only consider *explicitly stated* operating conditions.
 
-This is opposed to **repeatability** (same team, same experimental setup) and **replicability** (different team, different experimental setup).
+<!-- TODO:
+
+The relevant question is not "is this CSE reproducible?"; nearly every CSE is reproducible (i.e., the result *can* be obtained in very specific conditions).
+The relevant question is, "in what conditions is this CSE reproducible"?
+
+Conditions := set of pairs of configuration and value.
+One element might be {("what are the contents of file.txt", "hello world"), ...}
+
+-->
 
 These definitions derive from _metrology_, the science of measuring, and we will specialize some of the terms "measurement", "measurement procedure", and "operating conditions" in software context for computational science experiments.
 
@@ -146,9 +134,9 @@ One can measure a number of relevant properties of the result of a software comp
 E.g., suppose one runs `gcc main.c` on two systems and one system uses a different version of `unistd.h`, which is `#included` by `main.c`.
 The process (running `gcc main.c`) does not reproduce source-equivalent binaries, but it might reproduce behavior-equivalent binaries or bit-wise equivalent binaries (depending on how different `unistd.h`).
 
-::::: {.todo}
+<!-- TODO: Find an appropriate place for the following ideas:
 
-TODO: Find an appropriate place for the following ideas:
+- Differentiate between "non-determinism" (hampers repeatability) and non-portability (hampers reproducibility, but not repeatability)
 
 - Explain cost-benefit from researchers' perspective
 
@@ -168,76 +156,74 @@ TODO: Find an appropriate place for the following ideas:
   - retraction of two papers from the Lancet and New England Journal of Medicine (Piller and Servick, s. d.). Both studies influenced international policies regarding the use of certain drugs, and they had to be quickly retracted. -- https://arxiv.org/pdf/2402.07530
   - Neil Ferguson's COVID model (Ferguson et al., 2020), for which (Pouzat, 2022) prepared a humorous article highlighting the scandal caused by the nonpublication of Ferguson's initial code. -- https://arxiv.org/pdf/2402.07530
 
-:::::
+-->
 
 # Related work
 
 There are many related works that address reproducibility.
 We will leverage the definitions and framework discussed above to contextualize each work.
 Still, there is a significant gap in prior work that this work will exploit.
+Prior work can be divided into three categories, which we will investigate in turn, and show how our framework applies:
 
-<!-- Overall, we encourage "defense-in-depth" approach that addresses reproducibility from multiple angles. -->
-<!-- Synergies exist between multiple approaches. -->
+1. Studying empirical characteristics of reproducibility
+2. Studying approaches associated with proactively ensuring reproducibility
+3. Studying approaches associated with reactively restoring reproducibility
 
-## Metastudies
+<!-- TODO:
+Overall, we encourage "defense-in-depth" approach that addresses reproducibility from multiple angles.
+
+Synergies exist between multiple approaches.
+
+Metastudies?
 
 Reproducibility, Replicability, and Repeatability: A survey of reproducible research with a focus on high performance computing by Antunes and Hill https://arxiv.org/abs/2402.07530
+--->
 
 ## Empirical characterization of reproducibility
 
-This group of related work seeks to characterize the degree of reproducibility in a sample of CSEs empirically either by static (analyzing the CSE code or just the presence of code) or dynamic methods (running the CSE code).
-Dynamic studies can be further divided into case-studies (small N, but deep analysis) and large-scale studies (large N, shallow analysis).
-Each work investigates a different kind of reproducibility or a proxy for reproducibility.
+This group of related work seeks to characterize the degree of reproducibility or a proxy for reproducibility in a sample of CSEs empirically.
+A proxy variable could be "whether the source is available", since this is a necessary but not sufficient condition for reproducibility.
 
-### Static
+| Publication                                   | N                | Subjects           | Population                     | Repro measurement assessed or proxy variable | Level        |
+|-----------------------------------------------|------------------|--------------------|--------------------------------|----------------------------------------------|--------------|
+| @vandewalleReproducibleResearchSignal2009     | 134              | Article artifacts  | 2004 ed. of img. proc. journal | Code availability                            | 9%           |
+| @zhaoWhyWorkflowsBreak2012                    | 92               | Taverna workflows  | myExp. 2007 -- 2012            | Crash-free execution                         | 29%          |
+| @collbergRepeatabilityComputerSystems2016     | 508[^cb-note]    | Source code        | 2012 eds. of CS journals       | Crash-free compilation                       | 48%          |
+| @gundersen                                    | 400              | Article artifacts  | 2013 -- 2016 AI journals       | Sufficient description                       | 24%[^o-note] |
+| @pimentelLargeScaleStudyQuality2019           | 863,878[^p-note] | Jupyter notebooks  | GitHub                         | Same-stdout execution                        | 4%           |
+| @krafczykLearningReproducingComputational2021 | 5                | Articles artifacts | Journal of Comp. Phys.         | Figures and tables semantic equivalence      | 70%[^v-note] |
+| @wangAssessingRestoringReproducibility2021    | 3,740[^w-note]   | Jupyter notebooks  | GitHub                         | Crash-free execution                         | 19%          |
+| @trisovicLargescaleStudyResearch2022          | 2,109[^t-note]   | R scripts          | Harvard Dataverse              | Crash-free execution                         | 12%          |
 
-The simplest thing is to check whether the source code of a CSE is available.
+[^cb-note]: I am considering the total sample to be only those papers whose results were backed by code, did not require special hardware, and were not excluded due to overlapping author lists, since those are the only ones Collberg and Proebsting attempted to reproduce. I am considering OK<30 and OK>30 as "reproducible crash-free building" because codes labelled OK>Author were not actually reproduced on a new system; it was merely _repeated_ on the authors system [@collbergRepeatabilityComputerSystems2016].
 
-- J. Austin, T. Jackson, M. Fletcher, M. Jessop, B. Liang, M. Weeks, L. Smith, C. Ingram, and P. Watson. Carmen: Code analysis, repository and modeling for e-neuroscience. Procedia CS, 4:768–777, 2011.
-- Vandewalle
-- Collberg and Proebsting
-- Trisovic et al.
-- Guiteaux et al. '24
+[^t-note]: I am considering the total samples to be the set of _un-repaired_ codes, since those are the ones that actually exist publicly. Also, we _include_ codes for which the time limit was exceeded; reproduction was attempted and not successful in those conditions.
 
-### Dynamic case-studies
+[^p-note]: I am considering the total sample to be only notebooks that were valid, pure Python, and had an unambiguous order, since those are the ones Pimentel et al. attempt to reproduce [@pimentelLargeScaleStudyQuality2019.]
 
-### Dynamic large-scale
+[^w-note]: I am considering the total sample to eb only notebooks that had dependency information and used Python 3.5 or later, since those are the only ones Wang et al. attempted to reproduce [@wangAssessingRestoringReproducibility2021].
 
-- Trisovic et al.
-- Zhao et al.: Why Workflows Fail
-- Collberg and Proebsting
-- Follow-up of Collberg and Proebsting
-- Re-executions of Jupyter Notebooks
-- (Mesnard and Barba, 2017) studied fluid mechanics and found that it took three years to reproduce the results obtained from their own tools using two other tools and a parallel version of their tool. -- https://arxiv.org/pdf/2402.07530
-- As demonstrated by (Gundersen and Kjensmo, 2018), artificial intelligence is also not an exemption. -- https://arxiv.org/pdf/2402.07530
--  In the networking domain, (Kurkowski et al., 2005) found that less than 15% of papers on MANET (Mobile ad hoc networks) network simulations were reproducible. -- https://arxiv.org/pdf/2402.07530
--  In image processing,(Kovacevic, 2007) studied 15 published papers in her field and found that none of the presented algorithms were supported by any code, and only 33% of the data were available. -- https://arxiv.org/pdf/2402.07530
-- (Vandewalle et al., 2009) examined 134 papers in the same field and found that 9% of the papers had codes available, and 33% had data. -- https://arxiv.org/pdf/2402.07530
+[^o-note]: This figure is the average normalized "reproducibility score", based on whether the method, data, and experiment, were available. If it were 1, all the papers in the sample would be have method, data, and experiment availability, and if it were 0, none would be.
 
-Prior works on large-scale quantitative reproducibility studies can be split into those whose reproduction is assessed by automatic means versus a manual effort.
+[^v-note]: This figure is the average number of computational elements (figures and tables) that were reproduced to semantic equivalence in each paper.
 
-Zhao et al.~\cite{zhao_why_2012} evaluate automatic reproducibility of Taverna workflows from the myExperiment registry.
-However, Taverna is now defunct, and there have been many changes since 2012 (see \Cref{table:tools}), so we should expect the results to change.
-Furthermore, Zhao et al.\ do not examine the correlation of crashes with time or the kinds of outputs when the execution is crash-free.
+Note that crash-freedom is prevalent because it is the easiest to automatically assess.
+Source-availability requires human-intervention to test, so studies on crash-freedom simply begin from a corpus for which source code is available.
+Note that stdout-equivalence is feasible because Jupyter Notebooks bundle the stdout with the code; otherwise, the stdout is usually thrown away.
 
-Trisovic et al.~\cite{trisovic_large-scale_2022} evaluate automatic reproducibility of R code from the Harvard Dataverse repository.
-While Trisovic et al.\ propose to study reproducibility based on R version and time (in their RQ8), they treat time as a categorical variable and do not perform a statistical analysis to generalize their data.
-Furthermore, Trisovic et al.'s reproduction of R code does not include the order in which the scripts in a single project were originally run, so it incurs failures that may be simply due to a wrong order; our work studies workflows, which avoid the ordering problem because the workflow specifies dependencies between tasks.
+Overall, these studies show that reproducibility is a significant problem.
 
-Pimentel et al.~\cite{pimentel_large-scale_2019} and Wang et al.~\cite{wang_assessing_2021} automatically run Jupyter Notebooks from GitHub.
-Jupyter Notebooks have different strengths and use-cases than workflows.
-Jupyter Notebooks are usually used for small, interactive jobs, whereas workflows are used for large, batch-processing jobs \cite{koster_snakemakescalable_2012,di_tommaso_nextflow_2017}.
-For example, Snakemake and Nextflow \emph{at the language-level} both provide facilities to run jobs on a cluster.
-Snakemake and Nextflow, \emph{by default}, write intermediate results to disk so that workflows can be resumed if the node halts or needs to be restarted.
-While both batch-scheduling submission, crash-recovery, and containerization can be implemented in Python, workflow engines are more specialized for analyzing data at a large scale.
-Therefore, we expect that the reproducibility characteristics can be quite different.
-For example, Wang et al.\ find that using one set of Python packages, namely those in the default Anaconda distribution\footnote{See \url{https://www.anaconda.com/}}, was sufficient for running their evaluation; in contrast, workflows in Snakemake and Nextflow often provide a distinct set of Python packages \emph{for each task}!
-Finding the correct set of packages is non-trivial, as we will see in RQ2.
+Some of the studies, like Zhao et al., investigate the _reason_ why some samples were not reproducible [@zhaoWhyWOrkflowsBreak2012], finding
 
-As an example of manual reproduction, Krafczyk et al.\ execute an in-depth case study on a small set of computational experiments~\cite{krafczyk_learning_2021}.
-Stodden et al.~\cite{stodden_best_2014} perform case studies with specific attention to journal policies.
-The case-study methodology is helpful for in-depth results but has difficulty generalizing the results to an entire population.
-Our work attempts an automatic reproduction of a large set of experiments to address population-level questions but does not perform an in-depth analysis of a small subset.
+| Reason                                      | Proportion of failures |
+|---------------------------------------------|------------------------|
+| Unavailable/inaccessible 3rd party resource | 41%                    |
+| Updated 3rd party resource                  | 7%                     |
+| Missing example data                        | 14%                    |
+| Insufficient execution environment          | 12%                    |
+| Insufficient metadata                       | 27%                    |
+
+Zhao et al. remark that provenance could preserve or enable repair for several classes of failures, including unavailability of 3rd party resources and insufficient descriptions.
 
 ### What are common reasons software is not reproducible?
 
@@ -245,9 +231,56 @@ We should address one of those.
 
 ## Proactively ensuring reproducibility
 
+There are several proposed approach associated with proactively ensuring reproducibility:
+
+| Approach                        | Aspect of reproducibility addressed            |
+|---------------------------------|------------------------------------------------|
+| Scientific clouds               | Reduces non-portable operating conditions      |
+| Digital artifact archival       | Ensure attainability of operating condition    |
+| Workflow managers               | Simplify measurement procedure                 |
+| Provenance                      | Identifies operating conditions                |
+| Record/replay executions        | Reduces operating conditions                   |
+| Version control                 | Versions and distributes measurement procedure |
+| Virtualization/containerization | Reduces non-portable operating conditions      |
+| Package managers                | Reduces non-portable operating conditions      |
+| Literate programming            | Explicates measurements                        |
+| Seeding inputs                  | Reduces non-deterministic operating conditions |
+| Coding practices                | Reduces non-deterministic operating conditions |
+|                                 |                                                |
+
+## Scientific clouds
+
+Scientific clouds aim to address reproducibility by replacing a complex set of operating conditions ("install this, configure that") with a single operating condition: log in to a cloud system.
+The cloud system hosts a controlled environment with the rest of the operating conditions already met.
+However, storing the environments and running executions in them is expensive.
+Either the users have to pay, in which case the computational environment is not "freely accessible", or some institution may sponsor public-access.
+Previous scientific clouds have a mixed record, with many going defunct in just a few years, failing in their promise of long-term reproducibility.
+
+| Scientific Cloud              | URL                                   | Lifetime on Archive.org |
+|-------------------------------|---------------------------------------|-------------------------|
+| WholeTale                     | WholeTale.org                         | 2016 -- present         |
+| GridSpace2                    | gs2.plgrid.pl                         | 2015 -- 2020            |
+| Collage Authoring Environment | collage.elsevier.com                  | 2013 -- 2014            |
+| RunMyCode                     | RunMyCode.org                         | 2012 -- 2024            |
+| SHARE                         | sites.google.com/site/executablepaper | 2011 -- 2023            |
+| GenePattern                   | GenePattern.org                       | 2006 -- present         |
+
+:::::: {.todo}
+
+TODO: Place the following:
+
+- Chameleon Cloud
+- Google Colab
+- GalaxyHub.eu
+- Gentleman & Temple Lang’s Research Compendium
+- G. R. Brammer, R. W. Crosby, S. Matthews, and T. L. Williams. Paper mch: Creating dynamic reproducible science. Procedia CS, 4:658–667, 2011.
+
+::::::
+
 ### Metastudies
 
 - Lazaro Costa
+  - https://dl.acm.org/doi/10.1145/3641525.3663623
 
 ### Literate programming
 
@@ -302,18 +335,9 @@ We should address one of those.
   - Guix
   - Spack
 
-### Scientific clouds
-
-- How/why scientific clouds can/can't help with reproducibility
-  - WholeTale
-  - Google Colab
-  - PaperMill (I think that was the name?)
-  - GalaxyHub.eu
-  - G. R. Brammer, R. W. Crosby, S. Matthews, and T. L. Williams. Paper mch: Creating dynamic reproducible science. Procedia CS, 4:658–667, 2011.
-  - V. Stodden, C. Hurlin, and C. Perignon. Runmycode.org: A novel dissemination and collaboration platform for executing published computational results. In eScience, pages 1–8. IEEE Computer Society, 2012.
-
 ## Retroactively restoring reproducibility
 
+- Continuous integration
 - Automatic build repair for reproducibility
 - Cindy Rubio-Gonzales
 - ShipWright
@@ -342,11 +366,12 @@ We should address one of those.
   - Research notebooks
   - Semantic description of hypothesis
   - P. V. Gorp and S. Mazanek. Share: a web portal for creating and sharing executable research papers. Procedia CS, 4:589–597, 2011
-- J. Kovaˇcevi ́c. How to encourage and publish reproducible research. In IEEE International Conference on Acoustic Speech Signal Processing, volume IV, pages 1273–1276, Apr. 2007.
+- J. Kovacevi (check name). How to encourage and publish reproducible research. In IEEE International Conference on Acoustic Speech Signal Processing, volume IV, pages 1273–1276, Apr. 2007.
 - Journals
   - N. Limare. Running a reproducible research journal, with source code inside. In ICERM Workshop, 2012.
   - ReScienceC (Rougier et al. 2017)
-  - An increasing number of journals and conferences are concerned with the reproducibility of published articles (Drummond, 2018) (Bajpai et al., 2019). 
+  - An increasing number of journals and conferences are concerned with the reproducibility of published articles (Drummond, 2018) (Bajpai et al., 2019).
+  - Image Processing On Line (IPOL) [Miguel Colom, Bertrand Kerautret, Nicolas Limare, Pascal Monasse, and Jean-Michel Morel. 2015. IPOL: a new journal for fully reproducible research; analysis of four years development. In 2015 7th International Conference on New Technologies, Mobility and Security (NTMS). IEEE, 1–5.]  
 - Copyright
   - V. Stodden. The legal framework for reproducible scientific research: Licensing and copyright. Computing in Science and Engineering, 11(1):35–40, 2009.
 - Domain-specific testbeds
@@ -354,6 +379,8 @@ We should address one of those.
   - Triscale
 - We found one survey providing state-of-the-art reproducibility in scientific computing (Ivie and Thain, 2018), and several books attempting to do so (Desquilbet et al., 2019) (National Academies of Sciences, 2019) (Randall and Welser, 2018). -- https://arxiv.org/pdf/2402.07530 
 - In his article (Drummond, 2018), Drummond asserted that sharing the source code of an article is unnecessary. He believes that researchers are forced to do so to avoid getting a bad label but that it does not serve science. For him, the reproducible research movement was not based on facts, but only on intuition. He adds that the obligation to provide the source code will lead to papers being accepted based on technically weak criteria and that, according to his opinion, fraud has always existed and never posed a significant problem. However, Drummond supports the concept of open science. -- https://arxiv.org/pdf/2402.07530
+- Prior work of https://web.archive.org/web/20220119115703/http://reproducibility.cs.arizona.edu/v2/RepeatabilityTR.pdf
+- http://reproducibleresearch.net/
 
 # My research strategy
 
@@ -367,7 +394,7 @@ re-active -> PROBE with automated environment exploration
 
 Translational CS
 
-# My completed work
+# Completed work
 
 ## Lifetime of workflows in sample
 
@@ -419,3 +446,21 @@ How likely are the stated goals to be achieved by the candidate?
 ## Timeline
 
 # Bibliography
+
+# Notes
+
+Important dimension to reproducibility approaches:  time.  For how long does a particular approach yield reproducibility?  A Dockerfile that is more than a few months old might not even build.
+
+Converting sys level to human level
+
+Explicitly state what is the same
+
+Robustness to software environment changes
+
+Empirical studies of repro
+
+- Send schehdule
+- Send expectations
+- Send draft
+- Email Tim re PROBE
+- Find prior art definitions

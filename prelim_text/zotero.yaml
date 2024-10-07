@@ -272,7 +272,7 @@ references:
   type: article-journal
   volume: '52'
 
-- id: acmincstaff
+- id: acminc.staffArtifactReviewBadging2020
   abstract: Result and Artifact Review documentation and badges - V.1.1
   accessed:
     - year: 2023
@@ -281,7 +281,7 @@ references:
   author:
     - family: ACM Inc. staff
       given: ''
-  citation-key: acmincstaff
+  citation-key: acminc.staffArtifactReviewBadging2020
   issued:
     - year: 2020
       month: 8
@@ -2453,6 +2453,58 @@ references:
   URL: https://www.sciencedirect.com/science/article/pii/S0167739X19320448
   volume: '108'
 
+- id: bertholdKNIMEKonstanzInformation2009
+  abstract: >-
+    The Konstanz Information Miner is a modular environment, which enables easy
+    visual assembly and interactive execution of a data pipeline. It is designed
+    as a teaching, research and collaboration platform, which enables simple
+    integration of new algorithms and tools as well as data manipulation or
+    visualization methods in the form of new modules or nodes. In this paper we
+    describe some of the design aspects of the underlying architecture, briey
+    sketch how new nodes can be incorporated, and highlight some of the new
+    features of version 2.0.
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Berthold
+      given: Michael R.
+    - family: Cebron
+      given: Nicolas
+    - family: Dill
+      given: Fabian
+    - family: Gabriel
+      given: Thomas R.
+    - family: Kötter
+      given: Tobias
+    - family: Meinl
+      given: Thorsten
+    - family: Ohl
+      given: Peter
+    - family: Thiel
+      given: Kilian
+    - family: Wiswedel
+      given: Bernd
+  citation-key: bertholdKNIMEKonstanzInformation2009
+  container-title: ACM SIGKDD Explorations Newsletter
+  container-title-short: SIGKDD Explor. Newsl.
+  DOI: 10.1145/1656274.1656280
+  ISSN: 1931-0145, 1931-0153
+  issue: '1'
+  issued:
+    - year: 2009
+      month: 11
+      day: 16
+  language: en
+  page: 26-31
+  source: DOI.org (Crossref)
+  title: 'KNIME - the Konstanz information miner: version 2.0 and beyond'
+  title-short: KNIME - the Konstanz information miner
+  type: article-journal
+  URL: https://dl.acm.org/doi/10.1145/1656274.1656280
+  volume: '11'
+
 - id: besseyFewBillionLines2010
   abstract: >-
     How Coverity built a bug-finding tool, and a business, around the unlimited
@@ -3032,6 +3084,57 @@ references:
     - family: Turner
       given: Kandace
   citation-key: brinckmanComputingEnvironmentsReproducibility2019
+  container-title: Future Generation Computer Systems
+  container-title-short: Future Generation Computer Systems
+  DOI: 10.1016/j.future.2017.12.029
+  ISSN: 0167739X
+  issued:
+    - year: 2019
+      month: 5
+  language: en
+  page: 854-867
+  source: DOI.org (Crossref)
+  title: 'Computing environments for reproducibility: Capturing the “Whole Tale”'
+  title-short: Computing environments for reproducibility
+  type: article-journal
+  URL: https://linkinghub.elsevier.com/retrieve/pii/S0167739X17310695
+  volume: '94'
+
+- id: brinckmanComputingEnvironmentsReproducibility2019a
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Brinckman
+      given: Adam
+    - family: Chard
+      given: Kyle
+    - family: Gaffney
+      given: Niall
+    - family: Hategan
+      given: Mihael
+    - family: Jones
+      given: Matthew B.
+    - family: Kowalik
+      given: Kacper
+    - family: Kulasekaran
+      given: Sivakumar
+    - family: Ludäscher
+      given: Bertram
+    - family: Mecum
+      given: Bryce D.
+    - family: Nabrzyski
+      given: Jarek
+    - family: Stodden
+      given: Victoria
+    - family: Taylor
+      given: Ian J.
+    - family: Turk
+      given: Matthew J.
+    - family: Turner
+      given: Kandace
+  citation-key: brinckmanComputingEnvironmentsReproducibility2019a
   container-title: Future Generation Computer Systems
   container-title-short: Future Generation Computer Systems
   DOI: 10.1016/j.future.2017.12.029
@@ -5084,6 +5187,45 @@ references:
   type: post-weblog
   URL: https://ciechanow.ski/cameras-and-lenses/
 
+- id: ciepielaGridSpace2VirtualLaboratory2012
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Ciepiela
+      given: Eryk
+    - family: Zaraska
+      given: Leszek
+    - family: Sulka
+      given: Grzegorz D.
+  citation-key: ciepielaGridSpace2VirtualLaboratory2012
+  container-title: Building a National Distributed e-Infrastructure–PL-Grid
+  DOI: 10.1007/978-3-642-28267-6_19
+  editor:
+    - family: Bubak
+      given: Marian
+    - family: Szepieniec
+      given: Tomasz
+    - family: Wiatr
+      given: Kazimierz
+  event-place: Berlin, Heidelberg
+  ISBN: 978-3-642-28266-9 978-3-642-28267-6
+  issued:
+    - year: 2012
+  page: 240-251
+  publisher: Springer Berlin Heidelberg
+  publisher-place: Berlin, Heidelberg
+  source: DOI.org (Crossref)
+  title: >-
+    GridSpace2 Virtual Laboratory Case Study: Implementation of Algorithms for
+    Quantitative Analysis of Grain Morphology in Self-assembled Hexagonal
+    Lattices According to the Hillebrand Method
+  title-short: GridSpace2 Virtual Laboratory Case Study
+  type: chapter
+  URL: http://link.springer.com/10.1007/978-3-642-28267-6_19
+  volume: '7136'
+
 - id: cimpanuSupercomputersHackedEurope2020
   abstract: >-
     Confirmed infections have been reported in the UK, Germany, and Switzerland.
@@ -6989,6 +7131,46 @@ references:
   type: webpage
   URL: https://www.defmacro.org/ramblings/lisp.html
 
+- id: demorlhonDockerHubImage2020
+  accessed:
+    - year: 2024
+      month: 9
+      day: 4
+  author:
+    - family: Morlhon
+      given: Jean-Laurent
+      non-dropping-particle: de
+  citation-key: demorlhonDockerHubImage2020
+  container-title: Docker Blog
+  issued:
+    - year: 2020
+      month: 10
+      day: 22
+  title: Docker Hub Image Retention Policy Delayed, Subscription Updates
+  type: post-weblog
+  URL: >-
+    https://www.docker.com/blog/docker-hub-image-retention-policy-delayed-and-subscription-updates/
+
+- id: demorlhonScalingDockersBusiness2020
+  accessed:
+    - year: 2024
+      month: 9
+      day: 4
+  author:
+    - family: Morlhon
+      given: Jean-Laurent
+      non-dropping-particle: de
+  citation-key: demorlhonScalingDockersBusiness2020
+  container-title: Docker Blog
+  issued:
+    - year: 2020
+      month: 8
+      day: 24
+  title: 'Scaling Docker’s Business to Serve Millions More Developers: Storage'
+  type: post-weblog
+  URL: >-
+    https://www.docker.com/blog/scaling-dockers-business-to-serve-millions-more-developers-storage/
+
 - id: derossoPurposesConceptsMisfits2016
   abstract: >-
     Git is a widely used version control system that is powerful but
@@ -7562,6 +7744,27 @@ references:
   title: Reproducible Research in Computational Harmonic Analysis
   type: article-journal
   volume: '11'
+
+- id: douglasthainTechniquesPreservingScientific2015
+  accessed:
+    - year: 2024
+      month: 10
+      day: 5
+  author:
+    - family: Douglas Thain
+      given: Peter Ivie
+  citation-key: douglasthainTechniquesPreservingScientific2015
+  DOI: 10.7274/R0CZ353M
+  issued:
+    - year: 2015
+  publisher: University of Notre Dame
+  source: DOI.org (Datacite)
+  title: >-
+    Techniques for Preserving Scientific Software Executions: Preserve the Mess
+    or Encourage Cleanliness?
+  title-short: Techniques for Preserving Scientific Software Executions
+  type: article
+  URL: https://curate.nd.edu/show/n009w091d9n
 
 - id: drepperHowWriteShared2011
   abstract: >-
@@ -11275,6 +11478,43 @@ references:
   type: paper-conference
   URL: https://dl.acm.org/doi/10.1145/3589806.3600037
 
+- id: graysonBenchmarkSuitePerformance2024
+  accessed:
+    - year: 2024
+      month: 10
+      day: 5
+  author:
+    - family: Grayson
+      given: Samuel
+    - family: Aguilar
+      given: Faustino
+    - family: Milewicz
+      given: Reed
+    - family: Katz
+      given: Daniel S.
+    - family: Marinov
+      given: Darko
+  citation-key: graysonBenchmarkSuitePerformance2024
+  container-title: Proceedings of the 2nd ACM Conference on Reproducibility and Replicability
+  DOI: 10.1145/3641525.3663627
+  event-place: Rennes France
+  event-title: 'ACM REP ''24: ACM Conference on Reproducibility and Replicability'
+  ISBN: '9798400705304'
+  issued:
+    - year: 2024
+      month: 6
+      day: 18
+  language: en
+  page: 85-95
+  publisher: ACM
+  publisher-place: Rennes France
+  source: DOI.org (Crossref)
+  title: >-
+    A benchmark suite and performance analysis of user-space provenance
+    collectors
+  type: paper-conference
+  URL: https://dl.acm.org/doi/10.1145/3641525.3663627
+
 - id: graysonEvaluatingSystemLevelProvenance2023
   abstract: >-
     Tracking provenance has many applications in computational science,
@@ -11758,6 +11998,51 @@ references:
     Conferences
   type: paper-conference
   URL: https://dl.acm.org/doi/10.1145/3641525.3663631
+
+- id: gundersenStateArtReproducibility2018
+  abstract: >-
+    Background: Research results in artificial intelligence (AI) are criticized
+    for not being reproducible. Objective: To quantify the state of
+    reproducibility of empirical AI research using six reproducibility metrics
+    measuring three different degrees of reproducibility. Hypotheses: 1) AI
+    research is not documented well enough to reproduce the reported results. 2)
+    Documentation practices have improved over time. Method: The literature is
+    reviewed and a set of variables that should be documented to enable
+    reproducibility are grouped into three factors: Experiment, Data and Method.
+    The metrics describe how well the factors have been documented for a paper.
+    A total of 400 research papers from the conference series IJCAI and AAAI
+    have been surveyed using the metrics. Findings: None of the papers document
+    all of the variables. The metrics show that between 20% and 30% of the
+    variables for each factor are documented. One of the metrics show
+    statistically significant increase over time while the others show no
+    change. Interpretation: The reproducibility scores decrease with in- creased
+    documentation requirements. Improvement over time is found. Conclusion: Both
+    hypotheses are supported.
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Gundersen
+      given: Odd Erik
+    - family: Kjensmo
+      given: Sigbjørn
+  citation-key: gundersenStateArtReproducibility2018
+  container-title: Proceedings of the AAAI Conference on Artificial Intelligence
+  container-title-short: AAAI
+  DOI: 10.1609/aaai.v32i1.11503
+  ISSN: 2374-3468, 2159-5399
+  issue: '1'
+  issued:
+    - year: 2018
+      month: 4
+      day: 25
+  source: DOI.org (Crossref)
+  title: 'State of the Art: Reproducibility in Artificial Intelligence'
+  title-short: State of the Art
+  type: article-journal
+  URL: https://ojs.aaai.org/index.php/AAAI/article/view/11503
+  volume: '32'
 
 - id: guntherGuerrillaCapacityPlanning2007
   abstract: >-
@@ -12948,6 +13233,37 @@ references:
   type: article-journal
   URL: https://academic.oup.com/cje/article-lookup/doi/10.1093/cje/bet075
   volume: '38'
+
+- id: herouxCompatibleReproducibilityTaxonomy2018
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Heroux
+      given: Michael
+    - family: Barba
+      given: Lorena
+    - family: Parashar
+      given: Manish
+    - family: Stodden
+      given: Victoria
+    - family: Taufer
+      given: Michela
+  citation-key: herouxCompatibleReproducibilityTaxonomy2018
+  DOI: 10.2172/1481626
+  issued:
+    - year: 2018
+      month: 10
+      day: 1
+  number: SAND--2018-11186, 1481626, 669580
+  page: SAND--2018-11186, 1481626, 669580
+  source: DOI.org (Crossref)
+  title: >-
+    Toward a Compatible Reproducibility Taxonomy for Computational and Computing
+    Sciences
+  type: report
+  URL: https://www.osti.gov/servlets/purl/1481626/
 
 - id: herouxEditorialACMTOMS2015
   abstract: >-
@@ -15266,6 +15582,57 @@ references:
   type: report
   URL: https://www.hpcuserforum.com/ROI/
 
+- id: jupyterBinder20Reproducible2018
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Jupyter
+      given: Project
+    - family: Bussonnier
+      given: Matthias
+    - family: Forde
+      given: Jessica
+    - family: Freeman
+      given: Jeremy
+    - family: Granger
+      given: Brian
+    - family: Head
+      given: Tim
+    - family: Holdgraf
+      given: Chris
+    - family: Kelley
+      given: Kyle
+    - family: Nalvarte
+      given: Gladys
+    - family: Osheroff
+      given: Andrew
+    - family: Pacer
+      given: M
+    - family: Panda
+      given: Yuvi
+    - family: Perez
+      given: Fernando
+    - family: Ragan-Kelley
+      given: Benjamin
+    - family: Willing
+      given: Carol
+  citation-key: jupyterBinder20Reproducible2018
+  DOI: 10.25080/Majora-4af1f417-011
+  event-place: Austin, Texas
+  event-title: Python in Science Conference
+  issued:
+    - year: 2018
+  page: 113-120
+  publisher-place: Austin, Texas
+  source: DOI.org (Crossref)
+  title: >-
+    Binder 2.0 - Reproducible, interactive, sharable environments for science at
+    scale
+  type: paper-conference
+  URL: https://doi.curvenote.com/10.25080/Majora-4af1f417-011
+
 - id: juristoReplicationSoftwareEngineering2012
   accessed:
     - year: 2022
@@ -15874,6 +16241,61 @@ references:
   source: IEEE Xplore
   title: Regression Test Selection Tool for Python in Continuous Integration Process
   type: paper-conference
+
+- id: keaheyLessonsLearnedChameleon2020
+  abstract: >-
+    The Chameleon testbed is a case study in adapting the cloud paradigm for
+    computer science research. In this paper, we explain how this adaptation was
+    achieved, evaluate it from the perspective of supporting the most
+    experiments for the most users, and make a case that utilizing mainstream
+    technology in research testbeds can increase efﬁciency without compromising
+    on functionality. We also highlight the opportunity inherent in the shared
+    digital artifacts generated by testbeds and give an overview of the efforts
+    we’ve made to develop it to foster reproducibility.
+  author:
+    - family: Keahey
+      given: Kate
+    - family: Anderson
+      given: Jason
+    - family: Zhen
+      given: Zhuo
+    - family: Riteau
+      given: Pierre
+    - family: Ruth
+      given: Paul
+    - family: Stanzione
+      given: Dan
+    - family: Cevik
+      given: Mert
+    - family: Colleran
+      given: Jacob
+    - family: Gunawi
+      given: Haryadi
+    - family: Hammock
+      given: Cody
+    - family: Mambretti
+      given: Joe
+    - family: Barnes
+      given: Alexander
+    - family: Halbah
+      given: Francois
+    - family: Rocha
+      given: Alex
+    - family: Stubbs
+      given: joe
+  citation-key: keaheyLessonsLearnedChameleon2020
+  container-title: 2020 USENIX Anuual Technical Conference
+  event-title: USENIX ATC
+  issued:
+    - year: 2020
+      month: 7
+      day: 15
+  language: en
+  publisher: USENIX
+  source: Zotero
+  title: Lessons Learned from the Chameleon Testbed
+  type: paper-conference
+  URL: https://www.usenix.org/conference/atc20/presentation/keahey
 
 - id: kelleyFrameworkCreatingKnowledge2021
   abstract: >-
@@ -16776,6 +17198,32 @@ references:
   URL: >-
     http://academic.oup.com/mnras/article/435/2/1618/1043579/Structure-finding-in-cosmological-simulations-the
   volume: '435'
+
+- id: knuthLiterateProgramming1984
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Knuth
+      given: D. E.
+  citation-key: knuthLiterateProgramming1984
+  container-title: The Computer Journal
+  container-title-short: The Computer Journal
+  DOI: 10.1093/comjnl/27.2.97
+  ISSN: 0010-4620, 1460-2067
+  issue: '2'
+  issued:
+    - year: 1984
+      month: 2
+      day: 1
+  language: en
+  page: 97-111
+  source: DOI.org (Crossref)
+  title: Literate Programming
+  type: article-journal
+  URL: https://academic.oup.com/comjnl/article-lookup/doi/10.1093/comjnl/27.2.97
+  volume: '27'
 
 - id: koeblerTemplateEngines2013
   abstract: 'Template-Engines: Concepts, thoughts, comparisons and benchmarks.'
@@ -21909,6 +22357,46 @@ references:
   type: post-weblog
   URL: https://www.cos.io/blog/strategy-for-culture-change
 
+- id: nowakowskiCollageAuthoringEnvironment2011
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Nowakowski
+      given: Piotr
+    - family: Ciepiela
+      given: Eryk
+    - family: Harężlak
+      given: Daniel
+    - family: Kocot
+      given: Joanna
+    - family: Kasztelnik
+      given: Marek
+    - family: Bartyński
+      given: Tomasz
+    - family: Meizner
+      given: Jan
+    - family: Dyk
+      given: Grzegorz
+    - family: Malawski
+      given: Maciej
+  citation-key: nowakowskiCollageAuthoringEnvironment2011
+  container-title: Procedia Computer Science
+  container-title-short: Procedia Computer Science
+  DOI: 10.1016/j.procs.2011.04.064
+  ISSN: '18770509'
+  issued:
+    - year: 2011
+  language: en
+  license: https://www.elsevier.com/tdm/userlicense/1.0/
+  page: 608-617
+  source: DOI.org (Crossref)
+  title: The Collage Authoring Environment
+  type: article-journal
+  URL: https://linkinghub.elsevier.com/retrieve/pii/S1877050911001220
+  volume: '4'
+
 - id: nuzzoHowScientistsFool2015
   abstract: >-
     Humans are remarkably good at self-deception. But growing concern about
@@ -22837,6 +23325,34 @@ references:
   type: paper-conference
   URL: https://dl.acm.org/doi/10.1145/3127479.3129249
 
+- id: patilStatisticalDefinitionReproducibility2016
+  abstract: |-
+    Abstract
+              Everyone agrees that reproducibility and replicability are fundamental characteristics of scientific studies. These topics are attracting increasing attention, scrutiny, and debate both in the popular press and the scientific literature. But there are no formal statistical definitions for these concepts, which leads to confusion since the same words are used for different concepts by different people in different fields. We provide formal and informal definitions of scientific studies, reproducibility, and replicability that can be used to clarify discussions around these concepts in the scientific and popular press.
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Patil
+      given: Prasad
+    - family: Peng
+      given: Roger D.
+    - family: Leek
+      given: Jeffrey T.
+  citation-key: patilStatisticalDefinitionReproducibility2016
+  DOI: 10.1101/066803
+  issued:
+    - year: 2016
+      month: 7
+      day: 29
+  language: en
+  license: http://creativecommons.org/licenses/by/4.0/
+  source: DOI.org (Crossref)
+  title: A statistical definition for reproducibility and replicability
+  type: article
+  URL: http://biorxiv.org/lookup/doi/10.1101/066803
+
 - id: pattersonLinkingTypesMultiLanguage2017
   abstract: >-
     Software developers compose systems from components written in many
@@ -23309,6 +23825,143 @@ references:
   title: Towards Scalable Dataframe Systems
   type: article-journal
   URL: http://arxiv.org/abs/2001.00888
+
+- id: petersPhenoMeNalProcessingAnalysis2019
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Peters
+      given: Kristian
+    - family: Bradbury
+      given: James
+    - family: Bergmann
+      given: Sven
+    - family: Capuccini
+      given: Marco
+    - family: Cascante
+      given: Marta
+    - family: "de\_Atauri"
+      given: Pedro
+    - family: Ebbels
+      given: Timothy M D
+    - family: Foguet
+      given: Carles
+    - family: Glen
+      given: Robert
+    - family: Gonzalez-Beltran
+      given: Alejandra
+    - family: Günther
+      given: Ulrich L
+    - family: Handakas
+      given: Evangelos
+    - family: Hankemeier
+      given: Thomas
+    - family: Haug
+      given: Kenneth
+    - family: Herman
+      given: Stephanie
+    - family: Holub
+      given: Petr
+    - family: Izzo
+      given: Massimiliano
+    - family: Jacob
+      given: Daniel
+    - family: Johnson
+      given: David
+    - family: Jourdan
+      given: Fabien
+    - family: Kale
+      given: Namrata
+    - family: Karaman
+      given: Ibrahim
+    - family: Khalili
+      given: Bita
+    - family: "Emami\_Khonsari"
+      given: Payam
+    - family: Kultima
+      given: Kim
+    - family: Lampa
+      given: Samuel
+    - family: Larsson
+      given: Anders
+    - family: Ludwig
+      given: Christian
+    - family: Moreno
+      given: Pablo
+    - family: Neumann
+      given: Steffen
+    - family: Novella
+      given: Jon Ander
+    - family: O'Donovan
+      given: Claire
+    - family: Pearce
+      given: Jake T M
+    - family: Peluso
+      given: Alina
+    - family: Piras
+      given: Marco Enrico
+    - family: Pireddu
+      given: Luca
+    - family: Reed
+      given: Michelle A C
+    - family: Rocca-Serra
+      given: Philippe
+    - family: Roger
+      given: Pierrick
+    - family: Rosato
+      given: Antonio
+    - family: Rueedi
+      given: Rico
+    - family: Ruttkies
+      given: Christoph
+    - family: Sadawi
+      given: Noureddin
+    - family: Salek
+      given: Reza M
+    - family: Sansone
+      given: Susanna-Assunta
+    - family: Selivanov
+      given: Vitaly
+    - family: Spjuth
+      given: Ola
+    - family: Schober
+      given: Daniel
+    - family: Thévenot
+      given: Etienne A
+    - family: Tomasoni
+      given: Mattia
+    - family: "van\_Rijswijk"
+      given: Merlijn
+    - family: "van\_Vliet"
+      given: Michael
+    - family: Viant
+      given: Mark R
+    - family: Weber
+      given: Ralf J M
+    - family: Zanetti
+      given: Gianluigi
+    - family: Steinbeck
+      given: Christoph
+  citation-key: petersPhenoMeNalProcessingAnalysis2019
+  container-title: GigaScience
+  DOI: 10.1093/gigascience/giy149
+  ISSN: 2047-217X
+  issue: '2'
+  issued:
+    - year: 2019
+      month: 2
+      day: 1
+  language: en
+  license: http://creativecommons.org/licenses/by/4.0/
+  source: DOI.org (Crossref)
+  title: 'PhenoMeNal: processing and analysis of metabolomics data in the cloud'
+  title-short: PhenoMeNal
+  type: article-journal
+  URL: >-
+    https://academic.oup.com/gigascience/article/doi/10.1093/gigascience/giy149/5232984
+  volume: '8'
 
 - id: phamUsingProvenanceRepeatability2013
   accessed:
@@ -24365,6 +25018,42 @@ references:
   URL: >-
     https://oaspa.org/oaspas-second-statement-following-the-article-in-science-entitled-whos-afraid-of-peer-review/
 
+- id: reichGenePattern202006
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Reich
+      given: Michael
+    - family: Liefeld
+      given: Ted
+    - family: Gould
+      given: Joshua
+    - family: Lerner
+      given: Jim
+    - family: Tamayo
+      given: Pablo
+    - family: Mesirov
+      given: Jill P
+  citation-key: reichGenePattern202006
+  container-title: Nature Genetics
+  container-title-short: Nat Genet
+  DOI: 10.1038/ng0506-500
+  ISSN: 1061-4036, 1546-1718
+  issue: '5'
+  issued:
+    - year: 2006
+      month: 5
+  language: en
+  license: http://www.springer.com/tdm
+  page: 500-501
+  source: DOI.org (Crossref)
+  title: GenePattern 2.0
+  type: article-journal
+  URL: https://www.nature.com/articles/ng0506-500
+  volume: '38'
+
 - id: reynoldsHamSandwichNation2013
   abstract: >-
     Though extensive due process protections apply to the investigation of
@@ -25020,6 +25709,139 @@ references:
     Science
   title-short: ReScience C
   type: paper-conference
+
+- id: rougierSustainableComputationalScience2017
+  abstract: >-
+    Computer science offers a large set of tools for prototyping, writing,
+    running, testing, validating, sharing and reproducing results, however
+    computational science lags behind. In the best case, authors may provide
+    their source code as a compressed archive and they may feel confident their
+    research is reproducible. But this is not exactly true. James Buckheit and
+    David Donoho proposed more than two decades ago that an article about
+    computational results is advertising, not scholarship. The actual
+    scholarship is the full software environment, code, and data that produced
+    the result. This implies new workflows, in particular in peer-reviews.
+    Existing journals have been slow to adapt: source codes are rarely
+    requested, hardly ever actually executed to check that they produce the
+    results advertised in the article. ReScience is a peer-reviewed journal that
+    targets computational research and encourages the explicit replication of
+    already published research, promoting new and open-source implementations in
+    order to ensure that the original research can be replicated from its
+    description. To achieve this goal, the whole publishing chain is radically
+    different from other traditional scientific journals. ReScience resides on
+    GitHub where each new implementation of a computational study is made
+    available together with comments, explanations, and software tests.
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Rougier
+      given: Nicolas P.
+    - family: Hinsen
+      given: Konrad
+    - family: Alexandre
+      given: Frédéric
+    - family: Arildsen
+      given: Thomas
+    - family: Barba
+      given: Lorena
+    - family: Benureau
+      given: Fabien C. Y.
+    - family: Brown
+      given: C. Titus
+    - family: Buyl
+      given: Pierre
+      non-dropping-particle: de
+    - family: Caglayan
+      given: Ozan
+    - family: Davison
+      given: Andrew P.
+    - family: Delsuc
+      given: Marc André
+    - family: Detorakis
+      given: Georgios
+    - family: Diem
+      given: Alexandra K.
+    - family: Drix
+      given: Damien
+    - family: Enel
+      given: Pierre
+    - family: Girard
+      given: Benoît
+    - family: Guest
+      given: Olivia
+    - family: Hall
+      given: Matt G.
+    - family: Henriques
+      given: Rafael Neto
+    - family: Hinaut
+      given: Xavier
+    - family: Jaron
+      given: Kamil S.
+    - family: Khamassi
+      given: Mehdi
+    - family: Klein
+      given: Almar
+    - family: Manninen
+      given: Tiina
+    - family: Marchesi
+      given: Pietro
+    - family: McGlinn
+      given: Dan
+    - family: Metzner
+      given: Christoph
+    - family: Petchey
+      given: Owen L.
+    - family: Plesser
+      given: Hans Ekkehard
+    - family: Poisot
+      given: Timothée
+    - family: Ram
+      given: Karthik
+    - family: Ram
+      given: Yoav
+    - family: Roesch
+      given: Etienne
+    - family: Rossant
+      given: Cyrille
+    - family: Rostami
+      given: Vahid
+    - family: Shifman
+      given: Aaron
+    - family: Stachelek
+      given: Joseph
+    - family: Stimberg
+      given: Marcel
+    - family: Stollmeier
+      given: Frank
+    - family: Vaggi
+      given: Federico
+    - family: Viejo
+      given: Guillaume
+    - family: Vitay
+      given: Julien
+    - family: Vostinar
+      given: Anya
+    - family: Yurchak
+      given: Roman
+    - family: Zito
+      given: Tiziano
+  citation-key: rougierSustainableComputationalScience2017
+  container-title: PeerJ Computer Science
+  DOI: 10.7717/peerj-cs.142
+  ISSN: 2376-5992
+  issued:
+    - year: 2017
+      month: 12
+      day: 18
+  page: e142
+  source: arXiv.org
+  title: 'Sustainable computational science: the ReScience initiative'
+  title-short: Sustainable computational science
+  type: article-journal
+  URL: http://arxiv.org/abs/1707.04393
+  volume: '3'
 
 - id: rubinCausalInferenceUsing2005
   abstract: >-
@@ -26759,6 +27581,34 @@ references:
   type: article-journal
   URL: http://arxiv.org/abs/2203.17112
 
+- id: siciliaCommunityCurationOpen2017
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Sicilia
+      given: Miguel-Angel
+    - family: García-Barriocanal
+      given: Elena
+    - family: Sánchez-Alonso
+      given: Salvador
+  citation-key: siciliaCommunityCurationOpen2017
+  container-title: Procedia Computer Science
+  container-title-short: Procedia Computer Science
+  DOI: 10.1016/j.procs.2017.03.009
+  ISSN: '18770509'
+  issued:
+    - year: 2017
+  language: en
+  page: 54-60
+  source: DOI.org (Crossref)
+  title: 'Community Curation in Open Dataset Repositories: Insights from Zenodo'
+  title-short: Community Curation in Open Dataset Repositories
+  type: article-journal
+  URL: https://linkinghub.elsevier.com/retrieve/pii/S1877050917302776
+  volume: '106'
+
 - id: siegmundViewsInternalExternal2015
   abstract: >-
     Empirical methods have grown common in software engineering, but there is no
@@ -27031,6 +27881,31 @@ references:
   title-short: Research software engineering
   type: report
   URL: https://www.osti.gov/servlets/purl/1845242/
+
+- id: singhFigShare2011
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Singh
+      given: Jatinder
+  citation-key: singhFigShare2011
+  container-title: Journal of Pharmacology and Pharmacotherapeutics
+  container-title-short: Journal of Pharmacology and Pharmacotherapeutics
+  DOI: 10.4103/0976-500X.81919
+  ISSN: 0976-500X, 0976-5018
+  issue: '2'
+  issued:
+    - year: 2011
+      month: 6
+  language: en
+  page: 138-139
+  source: DOI.org (Crossref)
+  title: FigShare
+  type: article-journal
+  URL: http://journals.sagepub.com/doi/10.4103/0976-500X.81919
+  volume: '2'
 
 - id: singularitydevelopersSecuritySingularityCESingularityCE2023
   accessed:
@@ -28101,6 +28976,38 @@ references:
   type: article-journal
   URL: https://academiccommons.columbia.edu/doi/10.7916/D8WH30H4
 
+- id: stoddenRunMyCodeorgNovelDissemination2012
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Stodden
+      given: Victoria
+    - family: Hurlin
+      given: Christophe
+    - family: Perignon
+      given: Christophe
+  citation-key: stoddenRunMyCodeorgNovelDissemination2012
+  container-title: 2012 IEEE 8th International Conference on E-Science
+  DOI: 10.1109/eScience.2012.6404455
+  event-place: Chicago, IL, USA
+  event-title: 2012 IEEE 8th International Conference on E-Science (e-Science)
+  ISBN: 978-1-4673-4466-1 978-1-4673-4467-8 978-1-4673-4465-4
+  issued:
+    - year: 2012
+      month: 10
+  page: 1-8
+  publisher: IEEE
+  publisher-place: Chicago, IL, USA
+  source: DOI.org (Crossref)
+  title: >-
+    RunMyCode.org: A novel dissemination and collaboration platform for
+    executing published computational results
+  title-short: RunMyCode.org
+  type: paper-conference
+  URL: http://ieeexplore.ieee.org/document/6404455/
+
 - id: stoddenScientificMethodPractice2010
   abstract: >-
     Since the 1660’s the scientific method has included reproducibility
@@ -28889,6 +29796,297 @@ references:
   type: article
   URL: http://arxiv.org/abs/1605.00498
 
+- id: thegalaxycommunityGalaxyPlatformAccessible2024
+  abstract: "Abstract\n            Galaxy (https://galaxyproject.org) is deployed globally, predominantly through free-to-use services, supporting user-driven research that broadens in scope each year. Users are attracted to public Galaxy services by platform stability, tool and reference dataset diversity, training, support\_and integration, which enables complex, reproducible, shareable data analysis. Applying the principles of user experience design (UXD), has driven improvements in accessibility, tool discoverability through Galaxy Labs/subdomains, and a redesigned Galaxy ToolShed. Galaxy tool capabilities are progressing in two strategic directions: integrating general purpose graphical processing units (GPGPU) access for cutting-edge methods, and licensed tool support. Engagement with global research consortia is being increased by developing more workflows in Galaxy and by resourcing the public Galaxy services to run them. The Galaxy Training Network (GTN) portfolio has grown in both size, and accessibility, through learning paths and direct integration with Galaxy tools that feature in training courses. Code development continues in line with the Galaxy Project roadmap, with improvements to job scheduling and the user interface. Environmental impact assessment is also helping engage users and developers, reminding them of their role in sustainability, by displaying estimated CO2 emissions generated by each Galaxy job."
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - literal: The Galaxy Community
+    - family: Abueg
+      given: Linelle Ann L
+    - family: Afgan
+      given: Enis
+    - family: Allart
+      given: Olivier
+    - family: Awan
+      given: Ahmed H
+    - family: Bacon
+      given: Wendi A
+    - family: Baker
+      given: Dannon
+    - family: Bassetti
+      given: Madeline
+    - family: Batut
+      given: Bérénice
+    - family: Bernt
+      given: Matthias
+    - family: Blankenberg
+      given: Daniel
+    - family: Bombarely
+      given: Aureliano
+    - family: Bretaudeau
+      given: Anthony
+    - family: Bromhead
+      given: Catherine J
+    - family: Burke
+      given: Melissa L
+    - family: Capon
+      given: Patrick K
+    - family: Čech
+      given: Martin
+    - family: Chavero-Díez
+      given: María
+    - family: Chilton
+      given: John M
+    - family: Collins
+      given: Tyler J
+    - family: Coppens
+      given: Frederik
+    - family: Coraor
+      given: Nate
+    - family: Cuccuru
+      given: Gianmauro
+    - family: Cumbo
+      given: Fabio
+    - family: Davis
+      given: John
+    - family: De Geest
+      given: Paul F
+    - family: De Koning
+      given: Willem
+    - family: Demko
+      given: Martin
+    - family: DeSanto
+      given: Assunta
+    - family: Begines
+      given: José Manuel Domínguez
+    - family: Doyle
+      given: Maria A
+    - family: Droesbeke
+      given: Bert
+    - family: Erxleben-Eggenhofer
+      given: Anika
+    - family: Föll
+      given: Melanie C
+    - family: Formenti
+      given: Giulio
+    - family: Fouilloux
+      given: Anne
+    - family: Gangazhe
+      given: Rendani
+    - family: Genthon
+      given: Tanguy
+    - family: Goecks
+      given: Jeremy
+    - family: Beltran
+      given: Alejandra N Gonzalez
+    - family: Goonasekera
+      given: Nuwan A
+    - family: Goué
+      given: Nadia
+    - family: Griffin
+      given: Timothy J
+    - family: Grüning
+      given: Björn A
+    - family: Guerler
+      given: Aysam
+    - family: Gundersen
+      given: Sveinung
+    - family: Gustafsson
+      given: Ove Johan Ragnar
+    - family: Hall
+      given: Christina
+    - family: Harrop
+      given: Thomas W
+    - family: Hecht
+      given: Helge
+    - family: Heidari
+      given: Alireza
+    - family: Heisner
+      given: Tillman
+    - family: Heyl
+      given: Florian
+    - family: Hiltemann
+      given: Saskia
+    - family: Hotz
+      given: Hans-Rudolf
+    - family: Hyde
+      given: Cameron J
+    - family: Jagtap
+      given: Pratik D
+    - family: Jakiela
+      given: Julia
+    - family: Johnson
+      given: James E
+    - family: Joshi
+      given: Jayadev
+    - family: Jossé
+      given: Marie
+    - family: Jum’ah
+      given: Khaled
+    - family: Kalaš
+      given: Matúš
+    - family: Kamieniecka
+      given: Katarzyna
+    - family: Kayikcioglu
+      given: Tunc
+    - family: Konkol
+      given: Markus
+    - family: Kostrykin
+      given: Leonid
+    - family: Kucher
+      given: Natalie
+    - family: Kumar
+      given: Anup
+    - family: Kuntz
+      given: Mira
+    - family: Lariviere
+      given: Delphine
+    - family: Lazarus
+      given: Ross
+    - family: Bras
+      given: Yvan Le
+    - family: Corguillé
+      given: Gildas Le
+    - family: Lee
+      given: Justin
+    - family: Leo
+      given: Simone
+    - family: Liborio
+      given: Leandro
+    - family: Libouban
+      given: Romane
+    - family: Tabernero
+      given: David López
+    - family: Lopez-Delisle
+      given: Lucille
+    - family: Los
+      given: Laila S
+    - family: Mahmoud
+      given: Alexandru
+    - family: Makunin
+      given: Igor
+    - family: Marin
+      given: Pierre
+    - family: Mehta
+      given: Subina
+    - family: Mok
+      given: Winnie
+    - family: Moreno
+      given: Pablo A
+    - family: Morier-Genoud
+      given: François
+    - family: Mosher
+      given: Stephen
+    - family: Müller
+      given: Teresa
+    - family: Nasr
+      given: Engy
+    - family: Nekrutenko
+      given: Anton
+    - family: Nelson
+      given: Tiffanie M
+    - family: Oba
+      given: Asime J
+    - family: Ostrovsky
+      given: Alexander
+    - family: Polunina
+      given: Polina V
+    - family: Poterlowicz
+      given: Krzysztof
+    - family: Price
+      given: Elliott J
+    - family: Price
+      given: Gareth R
+    - family: Rasche
+      given: Helena
+    - family: Raubenolt
+      given: Bryan
+    - family: Royaux
+      given: Coline
+    - family: Sargent
+      given: Luke
+    - family: Savage
+      given: Michelle T
+    - family: Savchenko
+      given: Volodymyr
+    - family: Savchenko
+      given: Denys
+    - family: Schatz
+      given: Michael C
+    - family: Seguineau
+      given: Pauline
+    - family: Serrano-Solano
+      given: Beatriz
+    - family: Soranzo
+      given: Nicola
+    - family: Srikakulam
+      given: Sanjay Kumar
+    - family: Suderman
+      given: Keith
+    - family: Syme
+      given: Anna E
+    - family: Tangaro
+      given: Marco Antonio
+    - family: Tedds
+      given: Jonathan A
+    - family: Tekman
+      given: Mehmet
+    - family: Cheng (Mike) Thang
+      given: Wai
+    - family: Thanki
+      given: Anil S
+    - family: Uhl
+      given: Michael
+    - family: Van Den Beek
+      given: Marius
+    - family: Varshney
+      given: Deepti
+    - family: Vessio
+      given: Jenn
+    - family: Videm
+      given: Pavankumar
+    - family: Von Kuster
+      given: Greg
+    - family: Watson
+      given: Gregory R
+    - family: Whitaker-Allen
+      given: Natalie
+    - family: Winter
+      given: Uwe
+    - family: Wolstencroft
+      given: Martin
+    - family: Zambelli
+      given: Federico
+    - family: Zierep
+      given: Paul
+    - family: Zoabi
+      given: Rand
+  citation-key: thegalaxycommunityGalaxyPlatformAccessible2024
+  container-title: Nucleic Acids Research
+  DOI: 10.1093/nar/gkae410
+  ISSN: 0305-1048, 1362-4962
+  issue: W1
+  issued:
+    - year: 2024
+      month: 7
+      day: 5
+  language: en
+  license: https://creativecommons.org/licenses/by/4.0/
+  page: W83-W94
+  source: DOI.org (Crossref)
+  title: >-
+    The Galaxy platform for accessible, reproducible, and collaborative data
+    analyses: 2024 update
+  title-short: >-
+    The Galaxy platform for accessible, reproducible, and collaborative data
+    analyses
+  type: article-journal
+  URL: https://academic.oup.com/nar/article/52/W1/W83/7676834
+  volume: '52'
+
 - id: thiesStreamItLanguageStreaming2002
   abstract: >-
     We characterize high-performance streaming applications as a new and
@@ -29547,6 +30745,33 @@ references:
   URL: >-
     https://www.usenix.org/conference/fast17/technical-sessions/presentation/vangoor
 
+- id: vangorpSHAREWebPortal2011
+  accessed:
+    - year: 2024
+      month: 10
+      day: 4
+  author:
+    - family: Van Gorp
+      given: Pieter
+    - family: Mazanek
+      given: Steffen
+  citation-key: vangorpSHAREWebPortal2011
+  container-title: Procedia Computer Science
+  container-title-short: Procedia Computer Science
+  DOI: 10.1016/j.procs.2011.04.062
+  ISSN: '18770509'
+  issued:
+    - year: 2011
+  language: en
+  license: https://www.elsevier.com/tdm/userlicense/1.0/
+  page: 589-597
+  source: DOI.org (Crossref)
+  title: 'SHARE: a web portal for creating and sharing executable research papers'
+  title-short: SHARE
+  type: article-journal
+  URL: https://linkinghub.elsevier.com/retrieve/pii/S1877050911001207
+  volume: '4'
+
 - id: vanleerRelationUpwindDifferencingSchemes1984
   abstract: >-
     The upwind-differencing first-order schemes of Godunov, Engquist–Osher and
@@ -29862,6 +31087,52 @@ references:
   title: Learnable Programming
   type: post-weblog
   URL: http://worrydream.com/#!/LearnableProgramming
+
+- id: vilaImpactHardwareVariability2024
+  accessed:
+    - year: 2024
+      month: 10
+      day: 5
+  author:
+    - family: Vila
+      given: Gael
+    - family: Medernach
+      given: Emmanuel
+    - family: Gonzalez Pepe
+      given: Ines
+    - family: Bonnet
+      given: Axel
+    - family: Chatelain
+      given: Yohan
+    - family: Sdika
+      given: Michael
+    - family: Glatard
+      given: Tristan
+    - family: Camarasu Pop
+      given: Sorina
+  citation-key: vilaImpactHardwareVariability2024
+  container-title: Proceedings of the 2nd ACM Conference on Reproducibility and Replicability
+  DOI: 10.1145/3641525.3663626
+  event-place: Rennes France
+  event-title: 'ACM REP ''24: ACM Conference on Reproducibility and Replicability'
+  ISBN: '9798400705304'
+  issued:
+    - year: 2024
+      month: 6
+      day: 18
+  language: en
+  page: 75-84
+  publisher: ACM
+  publisher-place: Rennes France
+  source: DOI.org (Crossref)
+  title: >-
+    The Impact of Hardware Variability on Applications Packaged with Docker and
+    Guix: a Case Study in Neuroimaging
+  title-short: >-
+    The Impact of Hardware Variability on Applications Packaged with Docker and
+    Guix
+  type: paper-conference
+  URL: https://dl.acm.org/doi/10.1145/3641525.3663626
 
 - id: villanuevaNoEvidencePhosphine2021
   accessed:

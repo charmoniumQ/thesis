@@ -1,5 +1,5 @@
 ---
-# pandoc -i README.md -o README.pdf --standalone --filter=pandoc-crossref --citeproc --number-sections
+# pandoc -i README.md -o README.pdf --standalone --filter=pandoc-crossref --citeproc --number-sections --strip-comments
 title: How to enable inexpensive reproducibility for computational experiments
 author: Samuel Grayson
 date: 2024 Oct 03
@@ -10,63 +10,67 @@ geometry:
 - left=1.5in
 - right=1.5in
 number-sections: true
+colorlinks: true
+link-citations: true
 ---
 
 # Problem
 
-Reproducibility of scientific experiments is important for three reasons:
+Reproducibility is essential to scientific experiments for three reasons:
 
-1. The scientific community corrects false claims by applying scrutiny to each others' experiments.
-   Scrutinizing an experiment often includes reproducing it.
-   Therefore, reproducible experiments may be thoroughly scrutinized.
+1. The scientific community corrects false claims by scrutinizing.
+   Scurtinizing an experiment often involves reproducing it, possibly with novel parameters.
+   A reproducible experiments is easier to scrutinize, and therefore more likely to be correct, all else equal.
+
 2. Science works by building off of the work of others.
-   Often in extending anothers work, one needs to execute a modified version of their experiment.
+   Extending one's work requires executing a modified version of their experiment.
    If reproducing the same experiment is difficult, one would expect executing an extended version to be even more so.
    Therefore, reproducible experiments may be easier to extend.
-3. The end-goal for some science is to be applied in engineering applications.
-   Applying a novel technique on new data involves reproducing a part of the experiment which established the novel technique.
+
+3. Scientific research aims to impact practice.
+   Applying a novel technique to new data involves reproducing a part of the experiment that established the novel technique.
    Therefore, reproducible experiments may be easier to apply in practice.
 
 <!-- TODO
 Popper defined reproducibility as a criterion for distinguishing between science and pseudoscience (Hill, 2019 in https://arxiv.org/pdf/2402.07530).
-\-->
+-->
 
-Reproducibility also has costs, primarily in human labor needed to explain the experiment beyond that which would be needed to merely disseminate the results.
+Reproducibility also has costs, primarily in human labor needed to explain the experiment beyond that needed to disseminate the results.
 Working scientists balance the cost of reproducibility with the benefits to society or to themselves.
 
-In real-world experiments, there are an infinitude of possible factors that must be controlled to find the desired result; it would be unfathomable that two instantiations of an experiment could give exactly identical results.
-In contrast, for computational science experiments (from here on, **CS Exp**) on digital computers, while there are still many factors to be controlled, perfect reproduction is quite fathomable.
-Despite this apparent advantage, CS Exps on digital computers still suffer low rates of reproducibility.
+In real-world experiments, an infinitude of possible factors must be controlled to find the desired result; it would be unfathomable that two instantiations of an experiment could give identical results.
+In contrast, for computational science experiments (from here on, **CS Exp**) on digital computers, while there are still many factors to control, perfect reproduction is quite fathomable.
+Despite this apparent advantage, CS Exps on digital computers still suffer low reproducibility rates.
 
 ![Effort-vs-reproducibility tradeoff curve in the status quo and with reproducibility tools](./plot0.pdf){#fig:effort width=50%}
 
 The status quo will not change simply by arguing for reproducibility; those arguments are widely known are already taken into account by the efficient market.
-Nor do I have the power to change incentives in science funding policy.
-However, by reducing the cost of reproducibility, scientists may produce more reproducible experiments with the same effort ([@fig:effort]).
+Nor do the authors have the power to change incentives in science funding policy unilaterally.
+However, by reducing the cost of reproducibility, scientists may achieve greater reproducible with the same effort ([@fig:effort]).
 Reducing the cost is a technical problem this work attempts to solve.
 
-For the purposes of this work, "computational scientist" (from here on, **CS**) should be construed broadly, as anyone who uses research software to carry out some investigation.
-The term includes people who use research software for data analytics and for simulations, so long as scrutinizability, extensibility, and applicability are motivators.
+For this work, "computational scientist" (from here on, **CS**) should be construed broadly: anyone who uses research software in the process of inquiry.
+The term includes people who use research software for data analytics and simulations, so long as scrutinizability, extensibility, and applicability are motivators.
 The term applies to professors in academia as well as analysts in a national lab.
 
 # Background
 
-There have been conflicting sets of definitions for the terms *reproducibility* [@plesserReproducibilityVsReplicability2018].
-In this work we will use the Association for Computing Machinery (from here on, **ACM**) definition, if unspecified, although we will discuss the other definitions in the prior work section.
+There have been conflicting sets of definitions for the term *reproducibility* [@plesserReproducibilityVsReplicability2018].
+In this work, we use the Association for Computing Machinery (from here on, **ACM**) definition, if unspecified, although we discuss the other definitions in the prior work section.
 The ACM gave a compatible definition,
 
 > **Reproducibility**:
 > (different team, same experimental setup)
 > The measurement can be obtained with stated precision by a different team using the same measurement procedure, the same measuring system, under the same operating conditions, in the same or a different location on multiple trials.
 >
-> \--- [@acminc.staffArtiftReviewBadging2020]
+> --- [@acminc.staffArtifactReviewBadging2020]
 
-This is opposed to **repeatability** (same team, same experimental setup) and **replicability** (different team, different experimental setup).
+Reproducibility contrasts with **repeatability** (same team, same experimental setup) and **replicability** (different team, different experimental setup).
 
-The ACM definition references more useful auxiliary terms, such as measurement procedure, operating conditions, stated precision, etc., so we will use that one for this work.
+The ACM definition references more useful auxiliary terms, such as measurement procedure, operating conditions, and stated precision, so we use that for this work.
 
 Naïvely, every CSE would be "reproducible", since there is some, possibly unknown, set of conditions under which another team can make the measurement; i.e., "make your environment bit-wise the same as ours".
-To prevent the definition from being vacuous, we will only consider *explicitly stated* operating conditions.
+To prevent the definition from being vacuous, we only consider *explicitly stated* operating conditions.
 
 <!-- TODO:
 
@@ -82,55 +86,68 @@ Software archival makes conditions more "satisfiable"; the current definitions d
 
 What about the how much effort to rerun question? THe current definition is binary, so it doesn't encode "how hard".
 
-\-->
+-->
 
-These definitions derive from *metrology*, the science of measuring, and we will specialize some of the terms "measurement", "measurement procedure", and "operating conditions" in software context for computational science experiments.
+These definitions derive from *metrology*, the science of measuring.
+We specialize some of the terms "measurement", "measurement procedure", and "operating conditions" in software context for computational science experiments:
 
 - **Measurement procedure (for CSEs)**:
   The application code and user-interactions required to run the application code (if any).
+
 - **Operating conditions (for CSEs)**:
-  A set of conditions the computer system must implement in order to run a certain program.
-  E.g., GCC 12 at `/usr/bin/gcc` compiled with certain features enabled.
+  A set of conditions the computer system must implement to run a certain program.
+  E.g., GCC 12 must be installed at `/usr/bin/gcc` compiled with certain features enabled.
 
-One may over-specify operating conditions without changing the reproducibility status.
-E.g., one might say their software requires GCC 12, but really GCC 12 or 13 would work.
-It is quite difficult and often not necessary to know the necessary-and-sufficient set of operating conditions, so in practice, we usually have set of conditions that is sufficient but not necessary to operate the experiment.
+  One may over-specify operating conditions without changing the reproducibility status.
+  E.g., one might say their software requires GCC 12, but really GCC 12 or 13 would work.
+  It can be difficult and often not necessary to know the necessary-and-sufficient set of operating conditions, so in practice, we usually have set of conditions that is sufficient but not necessary to operate the experiment.
 
-Operating conditions can be eliminated by moving them to the measurement procedure.
-E.g., the program itself contains a copy of GCC 12.
-For the purposes of this work, the operating conditions are the "manual" steps that the user has to take in order to use the measurement procedure to make the measurement.
+  Operating conditions can be eliminated by moving them to the measurement procedure.
+  E.g., the program itself contains a copy of GCC 12.
+  For the purposes of this work, the operating conditions are the "manual" steps that the user has to take to use the measurement procedure to make the measurement.
 
 - **Measurement (for CSEs)**:
   Rather than offer a definition, we give some examples:
+
   - **Crash-freedom**: program produces result without crashing.
-  - **Bitwise equivalence**: output files and streams are bit-wise identical.
-  - **Statistical equivalence**: overlapping confidence intervals, etc.
+  - **Bit-wise equivalence**: output files and streams are bit-wise identical.
+  - **Statistical equivalence**: overlapping confidence intervals, statistically consistent conclusions.
   - **Inferential equivalence**: whether the inference is supported by the output.
-  - **Others**: domain-specific measurements/equivalences (e.g., XML-equivalence ignores order of attribtues)
+  - **Semantic equivalence**: equivalent according to the semantics of the defined data type (e.g., semantics of XML disregards whitespace in some contexts).
 
-In general, it is difficult to find a measurement that is both easy to assess and scientifically meaningful.
+  In general, it is difficult to find a measurement that is both easy to assess and scientifically meaningful ([@tbl:measurements]).
 
-| Measurement             | Easy to assess                            | Scientifically meaningful                                     |
-|-------------------------|-------------------------------------------|---------------------------------------------------------------|
-| Crash-freedom           | Yes; does it crash?                       | Too lenient; could be no-crash but completely opposite result |
-| Bitwise equivalence     | Yes                                       | Too strict; could be off by one decimal point                 |
-| Statistical equivalence | Maybe; need to know output format         | Maybe; need to know which statistics *can* be off               |
-| Inferential equivalence | No; need domain experts to argue about it | Yes                                                           |
+  \renewcommand{\arraystretch}{1.5}
 
-**Composition of measurement procedures**: The outcome of one measurement may be the input to another measurement procedure.
-This can happen in CSEs as well as in physical experiments.
-In physical experiments, one may use a device to calibrate (measure) some other device, and use that other device to measure some scientific phenomenon.
-Likewise, In CSE, the output of compilation may be used as the input to another CSE.
-One can measure a number of relevant properties of the result of a software compilation.
+  | Measurement             | Easy to assess                            | Scientifically meaningful                          |
+  |-------------------------|-------------------------------------------|----------------------------------------------------|
+  | Crash-freedom           | Yes; does it crash?                       | Too lenient; could be no-crash but opposite result |
+  | Bit-wise equivalence    | Yes                                       | Too strict; could be off by one decimal point      |
+  | Statistical equivalence | Maybe; need to know output format         | Maybe; need to know which statistics *can* be off  |
+  | Inferential equivalence | No; need domain experts to argue about it | Yes                                                |
+  | Semantic equivalence    | Depends on the semantics                  | Possibly                                           |
 
-| Compilation measurement | Definition                                                    |
-|-------------------------|---------------------------------------------------------------|
-| Source equivalence      | Compilation used exactly the same set of source code as input |
-| Behavioral equivalence  | The resulting binary has the same behavior as some other one  |
-| Bit-wise equivalence    | As before, the binary is exactly the same as some other one   |
+  : Measurments and their attributes. {#tbl:measurements}
 
-E.g., suppose one runs `gcc main.c` on two systems and one system uses a different version of `unistd.h`, which is `#included` by `main.c`.
-The process (running `gcc main.c`) does not reproduce source-equivalent binaries, but it might reproduce behavior-equivalent binaries or bit-wise equivalent binaries (depending on how different `unistd.h`).
+  \renewcommand{\arraystretch}{1}
+
+- **Composition of measurement procedures**:
+  The outcome of one measurement may be the input to another measurement procedure.
+
+  Composition happens in CSEs as well as in physical experiments.
+  In physical experiments, one may use a device to calibrate (measure) another device, and use that other device to measure some scientific phenomenon.
+  Likewise, In CSE, the output of compilation may be used as the input to another CSE.
+  One can measure a number of relevant properties of the result of a software compilation.
+  Composition of build processes motivates the following measurements
+
+  - **Source equivalence**: compilation used the same set of source code as input.
+
+  - **Behavioral equivalence**: the resulting binary has the same behavior as another one.
+
+  - **Bit-wise equivalence**: As before, the binary is exactly the same as another one.
+
+  E.g., suppose one runs `gcc main.c` on two systems and one system uses a different version of `unistd.h`, which is `#included` by `main.c`.
+  The process (running `gcc main.c`) does not reproduce source-equivalent binaries, but it might reproduce behavior-equivalent binaries or bit-wise equivalent binaries (depending on how different `unistd.h`).
 
 <!-- TODO: Find an appropriate place for the following ideas:
 
@@ -148,18 +165,20 @@ The process (running `gcc main.c`) does not reproduce source-equivalent binaries
   - retraction of two papers from the Lancet and New England Journal of Medicine (Piller and Servick, s. d.). Both studies influenced international policies regarding the use of certain drugs, and they had to be quickly retracted. -- https://arxiv.org/pdf/2402.07530
   - Neil Ferguson's COVID model (Ferguson et al., 2020), for which (Pouzat,022) prepared a humorous article highlighting the scandal caused by the nonpublication of Ferguson's initial code. -- https://arxiv.org/pdf/2402.07530
 
-\-->
+-->
 
 # Related work
 
 There are many related works that address reproducibility.
-We will leverage the definitions and framework discussed above to contextualize each work.
-Still, there is a significant gap in prior work that this work will exploit.
-Prior work can be divided into these categories, which we will investigate in turn:
+We leverage the definitions and framework discussed above to contextualize each work.
+Still, there are significant gaps in prior work that this work exploits.
+Prior work can be divided into these categories, which we investigate in turn:
 
 1. Characterizing reproducibility in theory or in practice
-2. Studying approaches associated with proactively ensuring reproducibility <!--
-3. Studying approaches associated with reactively restoring reproducibility --
+2. Studying approaches associated with proactively ensuring reproducibility
+<!--
+3. Studying approaches associated with reactively restoring reproducibility
+-->
 
 <!-- TODO:
 Overall, we encourage "defense-in-depth" approach that addresses reproducibility from multiple angles.
@@ -169,7 +188,7 @@ Synergies exist between multiple approaches.
 Metastudies?
 
 Reproducibility, Replicability, and Repeatability: A rvey of reproducible research with a focus on high performance computing by Antunes and Hill https://arxiv.org/abs/2402.07530
-\--->
+--->
 
 ## Characterizing reproducibility
 
@@ -183,17 +202,17 @@ Claerbout and Karrenbach give,
 
 > Running the same software on the same input data and obtaining the same results
 
-> \--- [@claerboutElectronicDocumentsGive1992]
+> --- [@claerboutElectronicDocumentsGive1992]
 
 which many other works use.
 Replicability was defined later as
 
 > Writing and then running new software based on the description of a computational model or method provided in the original publication, and obtaining results that are similar enough
 >
-> \--- [@rougierSustainableComputationalScience2017]
+> --- [@rougierSustainableComputationalScience2017]
 
-However, the ACM opted to use the terms how they were defined in metrology, which resulted in the same definitions being applied to opposite words as Claerbout and Karrenbach [@herouxCompatibleReproducibilityTaxonomy2018, @plesserReproducibilityVsReplicability2018].
-But the ACM revised their definitions to be compatible with Claerbout and Karrenbach in 2020 [@acminc.staffArtifactReviewBadging2020], so the definitions are mostly in consensus.
+The ACM opted to use the terms as they were defined in metrology, which resulted in the same definitions being applied to opposite words as Claerbout and Karrenbach [@herouxCompatibleReproducibilityTaxonomy2018, @plesserReproducibilityVsReplicability2018].
+However, the ACM revised their definitions to be compatible with Claerbout and Karrenbach in 2020 [@acminc.staffArtifactReviewBadging2020], so the definitions are mostly in consensus.
 
 <!-- TODO:
 Patil et al. clarify these definitions and model them mathematically in a (\\sigma)-algbera [@patilStatisticalDefinitionReproducibility2016].
@@ -201,7 +220,7 @@ Patil et al. clarify these definitions and model them mathematically in a (\\sig
 
 ### Empirical characterization of reproducibility
 
-This group of related work seeks to characterize the degree of reproducibility or a proxy for reproducibility in a sample of CSEs empirically.
+This group of related work seeks to characterize the degree of reproducibility or a proxy for reproducibility in a sample of CSEs empirically ([@tbl:empirical]).
 A proxy variable could be "whether the source is available", since this is a necessary but not sufficient condition for reproducibility.
 
 | Publication                                   | N                | Subjects           | Population                     | Repro measurement assessed or proxy variable | Level        |
@@ -215,13 +234,15 @@ A proxy variable could be "whether the source is available", since this is a nec
 | @wangAssessingRestoringReproducibility2021    | 3,740[^w-note]   | Jupyter notebooks  | GitHub                         | Crash-free execution                         | 19%          |
 | @trisovicLargescaleStudyResearch2022          | 2,109[^t-note]   | R scripts          | Harvard Dataverse              | Crash-free execution                         | 12%          |
 
-[^cb-note]: I am considering the total sample to be only those papers whose results were backed by code, did not require special hardware, and were not excluded due to overlapping author lists, since those are the only ones Collberg and Proebsting attempted to reproduce. I am considering OK<30 and OK>30 as "reproducible crash-free building" because codes labelled OK>Author were not actually reproduced on a new system; it was merely *repeated* on the authors system [@collbergRepeatabilityComputerSystems2016].
+: Prior works characterizing empirical reproudcibility. {#tbl:empirical}
 
-[^t-note]: I am considering the total samples to be the set of *un-repaired* codes, since those are the ones that actually exist publicly. Also, we *include* codes for whicthe time limit was exceeded; reproduction was attempted and not successf in those conditions.
+[^cb-note]: We consider the total sample to be only those papers whose results were backed by code, did not require special hardware, and were not excluded due to overlapping author lists, since those are the only ones Collberg and Proebsting attempted to reproduce. I am considering OK<30 and OK>30 as "reproducible crash-free building" because codes labelled OK>Author were not actually reproduced on a new system [@collbergRepeatabilityComputerSystems2016].
 
-[^p-note]: I am considering the total sample to be only notebooks that were valid, pure Python, and had an unambiguous order, since those are the ones Pimentel et al. attempt to reproduce [@pimentelLargeScaleStudyQuality2019.]
+[^t-note]: We consider the total samples to be the set of *un-repaired* codes, since those are the ones that actually exist publicly. Also, we *include* codes for which the time limit was exceeded; reproduction was attempted and not successf in those conditions.
 
-[^w-note]: I am considering the total sample to eb only notebooks that had dependency information and used Python 3.5 or later, since those are the only ones Wang et al. attempted to reproduce [@wangAssessingRestoringReproducibility2021].
+[^p-note]: We consider the total sample to be only notebooks that were valid, pure Python, and had an unambiguous order, since those are the ones Pimentel et al. attempt to reproduce [@pimentelLargeScaleStudyQuality2019.]
+
+[^w-note]: We consider the total sample to be only notebooks that had dependency information and used Python 3.5 or later, since those are the only ones Wang et al. attempted to reproduce [@wangAssessingRestoringReproducibility2021].
 
 [^o-note]: This figure is the average normalized "reproducibility score", based on whether the method, data, and experiment, were available. If it were 1, all the papers in the sample would be have method, data, and experiment availability, and if it were 0, none would be.
 
@@ -243,8 +264,8 @@ Some of the studies, like Zhao et al., investigate the *reason* why some samples
 | Insufficient execution environment          | 12%                    |
 | Insufficient metadata                       | 27%                    |
 
-Zhao et al. remark that provenance could preserve or enable repair for several classes of failures, including unavailability of 3rd party resources and insufficient descriptions.
-We will investigate this approach in my proposed work.
+@zhaoWhyWorkflowsBreak2012 remark that provenance could preserve or enable repair for several classes of failures, including unavailability of 3rd party resources and insufficient descriptions.
+We investigate this approach in my proposed work.
 
 ## Proactively ensuring reproducibility
 
@@ -265,7 +286,7 @@ There are several proposed approach associated with proactively facilitating rep
 | Seeding inputs                  | Reduces non-deterministic operating conditions |
 | Coding practices                | Reduces non-deterministic operating conditions |
 | Version control                 | Versions and distributes measurement procedure |
-\-->
+-->
 
 <!-- TODO: Ensure matches between table and headings -->
 
@@ -276,24 +297,28 @@ The cloud system hosts a controlled environment with t rest of the operating con
 
 However, storing the environments and running executis in them is expensive.
 Either the users have to pay, in which case the computational environment is not "freely accessible", orome institution may sponsor public-access.
-Institutional grants for public-access may be indefinite or it may only last for a certain aunt of time due to funding constraints[@tbl:sci-clouds]).
+Institutional grants for public-access may be indefinite or it may only last for a certain aunt of time due to funding constraints ([@tbl:sci-clouds]).
 
-| Scientific Cloud              | URL                  | Lifetime on Archive.org | Main publication                                    |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-|-------------------------------|----------------------|-------------------------|-----------------------------------------------------|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
-| Binder                        | mybinder.g           | 2018 -- present         | @jupyterBinder20Reproducible2018                    |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| Chameleon Cloud (federated)   | chameleoncloud.org   | 2015 --resent           | @keaheyLessonsLearnedChameleon2020                  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| PhenoMeNal portal             | phenomenal-h2020.eu  | 2017 -- 2023            | @petersPhenoMeNalProcessingAnalysis2019             |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| WholeTal                      | WholeTale.org        | 2016 -- present         | @brinckmanComputingEnvironmentsReproducibility2019a |  |  |  |  |  |  |  |  |  |  |  |  |
-| GridSpace2                    | gs2.plgrid.pl        | 2015 -- 2020            | @ciepielaGridSpace2VirtualLaboratory2012            |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| Collage Authoring Environment | collage.elsevier.com | 2013 -- 2014            | @nowakowskiCollageAuthoringEnvironment2011          |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| RunMyCode                     | RunMyCode.org        | 2012 -- 2024            | @stoddenRunMyCodeorgNovelDissemination2012          |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| SHARE                         |                      | 2011 -- 2023            | @vangorpSHAREWebPortal2011                          |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| Galaxy (federated)            | usegalaxy.org        | 2007 -- present         | @thegalaxycommunityGalaxyPlatformAccessible2024     |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| GenePattern                   | GenePattern.org      | 2006 -- present         | @reichGenePattern202006                             |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+\renewcommand{\arraystretch}{1.5}
+
+| Scientific Cloud              | URL                  | Lifetime on Archive.org | Main publication                                    |
+|-------------------------------|---------------------------|-------------------------|----------------------------------------------|
+| Binder                        | mybinder.org         | 2018 -- present         | @jupyterBinder20Reproducible2018                    |
+| Chameleon Cloud (federated)   | chameleoncloud.org   | 2015 --resent           | @keaheyLessonsLearnedChameleon2020                  |
+| PhenoMeNal portal             | phenomenal-h2020.eu  | 2017 -- 2023            | @petersPhenoMeNalProcessingAnalysis2019             |
+| WholeTal                      | WholeTale.org        | 2016 -- present         | @brinckmanComputingEnvironmentsReproducibility2019a |
+| GridSpace2                    | gs2.plgrid.pl        | 2015 -- 2020            | @ciepielaGridSpace2VirtualLaboratory2012            |
+| Collage Authoring Environment | collage.elsevier.com | 2013 -- 2014            | @nowakowskiCollageAuthoringEnvironment2011          |
+| RunMyCode                     | RunMyCode.org        | 2012 -- 2024            | @stoddenRunMyCodeorgNovelDissemination2012          |
+| SHARE                         |                      | 2011 -- 2023            | @vangorpSHAREWebPortal2011                          |
+| Galaxy (federated)            | usegalaxy.org        | 2007 -- present         | @thegalaxycommunityGalaxyPlatformAccessible2024     |
+| GenePattern                   | GenePattern.org      | 2006 -- present         | @reichGenePattern202006                             |
 
 : Various scientific clouds found in prior work, by creation date. {#tbl:sci-clouds}
 
-An improvement on this model is the *federated model* (as in Galaxy [@thegalaxycommunityGalaxyPlatformAccessible2024]), where the compute infrastructure could be provided by multiple parties which themselves may be free-access, pay-for-access, or locally hosted servers.
+\renewcommand{\arraystretch}{1}
+
+An improvement on this model is the *federated model* (as in @thegalaxycommunityGalaxyPlatformAccessible2024), where the compute infrastructure could be provided by multiple parties which themselves may be free-access, pay-for-access, or locally hosted servers.
 So long as the user can reserve compute resources on any *one* of them, they can import and run the CSE.
 Federation doesn't alleviate the funding problem, but it does spread out the funding problem; if the original grant runs out, some other institution can pick up the torch.
 If all else fails, technically savvy individuals can run servers for just themselves (so-called "self-hosting").
@@ -313,7 +338,7 @@ The idea of literate programming according to Knuth is to mix narrative and expl
 
 > Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do.
 >
-> \--- [@knuthLiterateProgramming1984]
+> --- [@knuthLiterateProgramming1984]
 
 Digital notebooks or electronic lab notebooks extend this to also include multimedia, such as graphs, widgets, and other data visualizations.
 Popular digital notebooks include:
@@ -327,7 +352,7 @@ Digital notebooks facilitate reproducibility by:
 
 However, digital notebooks still require a separate way of specifying the software environment (operating conditions).
 Repo2docker, famously used by the scientific cloud Binder, standardizes a way of specifying the software environment for notebooks contained in a repository by leveraging off-the-shelf package managers [@jupyterBinder20Reproducible2018].
-We will discuss package managers as a solution foreproducibility later on; the pointtill stands that literate programming requires other methods to manage the soware environment in order to attain reproducibility.
+We discuss package managers as a solution foreproducibility later on; the pointtill stands that literate programming requires other methods to manage the soware environment in order to attain reproducibility.
 
 <!-- TO:
 
@@ -349,6 +374,8 @@ https://arks.org/
 
 Archiving old versions of core software helps conditions remain satisfiable, since old versions may otherwise get deleted or become unfindable.
 
+\renewcommand{\arraystretch}{1.5}
+
 | Source Code archive       | Description                     | Lifetime        | Main publication                       |
 |---------------------------|---------------------------------|-----------------|----------------------------------------|
 | Software Heritage Archive | Collects codes in other sources | 2016 -- present | [@dicosmoCuratedArchivingResearch2020] |
@@ -356,6 +383,8 @@ Archiving old versions of core software helps conditions remain satisfiable, sin
 | FigShare                  | User-uploaded research codes    | 2012 -- present | [@singhFigShare2011]                   |
 
 : Source Archives by creation date. {#tbl:source-archival}
+
+\renewcommand{\arraystretch}{1}
 
 Storing source code in central archives shares some of the disavdantages of scientific clouds, but to a lesser extent.
 Merely storing scientific software is much easier than offering to execute them on-demand.
@@ -374,9 +403,9 @@ Workflow managers facilitate reproducibility by:
 - Explicitly stating parts of the measurement procedure that would otherwise be unwritten (which script to run, in what order)
 - Letting systems reason about the inputs and outputs of the measurement procedure
 
-Moelder <!-- TODO: O-umlaut --> et al. [@molderSustainableDataAnalysis2021] give classify workflow engines by their interface ([@tbl:wfs]) which we extend.
+Mölder et al. [@molderSustainableDataAnalysis2021] give classify workflow engines by their interface ([@tbl:wfs]) which we extend.
 The interface can be graphical, a library in a general purpose language (GPL), a domain specific language (DSL), or a data definition language (such as YAML).
-We reclassified the workflow managers in Moelder's system-independent class, since that does not refer to the interface, and we added other common workflow managers that have more than 1 workflow example in the registries listed in <https://workflows.communities/registries>
+We reclassified the workflow managers in Mölder's system-independent class, since that does not refer to the interface, and we added other common workflow managers that have more than 1 workflow example in the registries listed in <https://workflows.communities/registries>
 
 | Workflow Manager                         | Interface                |
 |------------------------------------------|--------------------------|
@@ -483,8 +512,6 @@ One might argue that record/replay "allows" users to be messy and merely preserv
 Simply copying the entire filesystem, for example, may work (the operating conditions are likely contained in the filesystem), but an entire filesystem inconvenient to transfer, compose, and execute.
 An ideal record/replay tool should allow users to introspect and simplify their computational environment.
 
-- Preserving the mess or encouraging cleanliness (Thaine)
-
 ### Virtualization and containerization
 
 System virtualization facilitates reproducibility by encapsulating an entire system (and thus its operating conditions) in a distributable sandbox.
@@ -504,7 +531,7 @@ In either case, either the system image has to be distributed (VM image, Docker 
 
 <!--
 https://par.nsf.gov/servlets/purl/10324363
-\-->
+-->
 
 <!--
 
@@ -515,7 +542,7 @@ https://par.nsf.gov/servlets/purl/10324363
   - Guix
   - Spack
 
-\-->
+-->
 
 <!--
 
@@ -523,7 +550,7 @@ https://par.nsf.gov/servlets/purl/10324363
 
 Why not share source, according to C&P?
 
-\-->
+-->
 
 <!--
 
@@ -558,7 +585,7 @@ https://dl.acm.org/doi/pdf/10.1145/3180155.3180181?casa_token=8zmvHNuOG3MAAAAA:F
 - ShipWright
 - Jupyter studies
 
-\-->
+-->
 
 <!--
 
@@ -624,7 +651,7 @@ There are numerous applications for provenance (workflow conversion, incremental
 
 Finally, the provenance tracer should be validated through user studies or case studies.
 Unexpected problems and invalidated assumptions often arise when trying to convert research into practice [@besseyFewBillionLines2010].
-Trying to apply to practice will make my research more impactful and give me novel problems and assumption-sets to operate in.
+Trying to apply to practice makes my research more impactful and gives me novel problems and assumption-sets to operate in.
 <!-- TODO: Cite Translational CS -->
 
 # Completed work
@@ -641,8 +668,8 @@ We found that workflows had a median failure rate of a couple of years [@fig:sur
 
 | Quantity                                               | All | SWC | nf-core |
 |--------------------------------------------------------|-----|-----|---------|
-| \# workflows                                            | 101 | 53  | 48      |
-| \# revisions                                            | 584 | 333 | 251     |
+| \# workflows                                           | 101 | 53  | 48      |
+| \# revisions                                           | 584 | 333 | 251     |
 | % of revisions with no crash                           | 28% | 11% | 51%     |
 | % of workflows with at least one non-crashing revision | 53% | 23% | 88%     |
 
@@ -667,7 +694,7 @@ Provenance tracing could help automatically upload inputs that a workflow needs 
 | Network resource changed       | 1%           |
 | Missing dependency             | 0.5%         |
 | No crash                       | 28%          |
-| \------------------------------ | \------------ |
+| ------------------------------ | ------------ |
 | Total                          | 100%         |
 
 : Workflow failure reasons {#tbl:wf-failures}
@@ -718,18 +745,18 @@ ptrace involves four context switches on every system call: one from the tracee 
 `LD_PRELOAD` involves *no* extraneous context switches.
 Therefore, we build on the underlying technology of fsatrace in our future work.
 
-| Benchmark          | Native   | fsatrace   | CARE   | strace   | RR    | ReproZip   |
-|--------------------|----------|------------|--------|----------|-------|------------|
-| BLAST              | 0        | 0          | 2      | 2        | 93    | 8          |
-| Tar Unarchive      | 0        | 4          | 44     | 114      | 195   | 149        |
-| Python import      | 0        | 5          | 85     | 84       | 150   | 346        |
-| VCS checkout       | 0        | 5          | 71     | 160      | 177   | 428        |
-| Compile w/Spack    | 0        | \-1         | 119    | 111      | 562   | 359        |
-| Postmark           | 0        | 2          | 231    | 650      | 259   | 1733       |
-| cp                 | 0        | 37         | 641    | 380      | 232   | 5791       |
-| Others not shown   | ...      | ...        | ...    | ...      | ...   | ...        |
-| \------------------ | \-------- | \---------- | \------ | \-------- | \----- | \---------- |
-| Geometric mean     | 0        | 0          | 45     | 66       | 46    | 193        |
+| Benchmark        | Native | fsatrace | CARE | strace | RR  | ReproZip |
+|------------------|--------|----------|------|--------|-----|----------|
+| BLAST            | 0      | 0        | 2    | 2      | 93  | 8        |
+| Tar Unarchive    | 0      | 4        | 44   | 114    | 195 | 149      |
+| Python import    | 0      | 5        | 85   | 84     | 150 | 346      |
+| VCS checkout     | 0      | 5        | 71   | 160    | 177 | 428      |
+| Compile w/Spack  | 0      | -1       | 119  | 111    | 562 | 359      |
+| Postmark         | 0      | 2        | 231  | 650    | 259 | 1733     |
+| cp               | 0      | 37       | 641  | 380    | 232 | 5791     |
+| Others not shown | ...    | ...      | ...  | ...    | ... | ...      |
+|------------------|--------|--------- |------|--------|-----|--------- |
+| Geometric mean   | 0      | 0        | 45   | 66     | 46  | 193      |
 
 : Performance of different provenance collectors. {#tbl:perf}
 
@@ -793,7 +820,7 @@ What impact can be expected in terms of particular research communities and on s
 # Feasibility
 
 How likely are the stated goals to be achieved by the candidate?
-\-->
+-->
 
 ## Timeline
 
@@ -824,4 +851,4 @@ Empirical studies of repro
 - Email Tim re PROBE
 - Find prior art definitions
 
-\-->
+-->

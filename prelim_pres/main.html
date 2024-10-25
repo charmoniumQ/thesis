@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/black.min.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>System-level provenance tracers</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [['\\(','\\)']],
+          displayMath: [['\\[', '\\]']],
+        },
+      });
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <section>
+            <h1>How to get reproducible computational experiments</h1>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/en/4/40/Triple_Self-Portrait.jpg"
+            />
+          </section>
+          <section>
+            <h3>Thank you</h3>
+            <p>Daniel S. Katz, Darko Marinov, Reed Milewicz, Bertram Ludäscher</p>
+          </section>
+          <section>
+            <h3>Takeaways</h3>
+            <ol>
+              <li class="fragment">
+                \(\exists\) valuable but unexplored ways to improve reproducibility
+              </li>
+              <li class="fragment">
+                It is feasible to research those for a 12-month thesis.
+              </li>
+            </ol>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2 id="background">Background</h2>
+            <img
+              alt="Castle on firm foundation"
+              src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Broadway_tower_edit.jpg"
+              style="height: 50vw; height: auto"
+            />
+          </section>
+          <section>
+            <ol class="toc" data-outlineCurrent="background"></ol>
+          </section>
+          <section>
+            <h3 data-outlineValue="Definitions">Defining reproducibility</h3>
+            <p>
+              <strong>Reproducibility</strong>
+              <span class="fragment">&coloneq;
+                The measurement can be obtained with stated precision by a
+                <span class="highlight">different team</span>
+                using the <span class="highlight">same measurement procedure</span>,
+                the <span class="highlight">same measuring system</span>,
+                under the <span class="highlight">same operating conditions</span>,
+                in the same or a different location on multiple trials.<br />
+                &mdash;
+                (<a href="https://www.acm.org/publications/policies/artifact-review-and-badging-current">ACM Inc. staff 2020</a>)</span>
+            </p>
+          </section>
+          <section>
+            <h3 class="outline-ignored">Related terms</h3>
+            <table style="font-size:0.8em">
+              <thead>
+                <tr>
+                  <!-- TODO: Transpose the table -->
+                  <th></th>
+                  <th>Repeatability</th>
+                  <th>Reproducibility</th>
+                  <th>Replicability</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Experimental setup</td>
+                  <td class="green-hl">Same</td>
+                  <td class="green-hl">Same</td>
+                  <td class="red-hl">Diff</td>
+                </tr>
+                <tr>
+                  <td>Team</td>
+                  <td class="green-hl">Same</td>
+                  <td class="red-hl">Diff</td>
+                  <td class="red-hl">Diff</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="small">
+              Experimental setup &coloneq; measurement procedure, measuring system, operating conditions
+            </p>
+          </section>
+          <section>
+            <h3>Why reproducibility</h3>
+            <ul>
+              <li class="fragment">Scientific claims should be scrutinizable</li>
+              <li class="fragment">Science builds off of other science</li>
+              <li class="fragment">Scientific research aims to impact practice</li>
+              <li class="fragment">Citation count (<a href="http://eprints.soton.ac.uk/id/eprint/354006">Hitchcock 2004</a>)</li>
+            </ul>
+            <figure class="besides">
+              <img
+                style="float: right;"
+                alt="Robert K. Merton"
+                src="https://upload.wikimedia.org/wikipedia/en/0/08/Robert_K_Merton.jpg"
+              />
+              <figcaption>Robert K. Merton</figcaption>
+            </figure>
+          </section>
+          <section class="outline-ignore">
+            <p>Tradeoff between effort and reproducibility</p>
+            <img src="./plot0.svg">
+          </section>
+          <section class="outline-ignore">
+            <p>Don't spend more effort; improve the techniques so your effort goes further</p>
+            <img src="./plot1.svg">
+          </section>
+          <section>
+            <p><strong>Problem:</strong> Reproducibility is important for science but too costly to pursue sufficiently.</p>
+            <!-- TODO: thesis stmt
+                 <p><strong>Thesis stmt:</strong> The technical solution I am developing reduces the cost.</p>
+            -->
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2 id="characterization">Characterization of reproducibility in practice</h2>
+            <img
+              style="height: 40vh"
+              src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Ukrainian_microscope_%28cropped%29.jpg" />
+          </section>
+          <section>
+            <ol class="toc" data-outlineCurrent="characterization"></ol>
+          </section>
+          <section>
+            <h3 class="outline-ignored">Why characterize reproducibility?</h3>
+            <p class="fragment">Is reproducibility a problem? How bad is it?</p>
+            <p class="fragment">Has it improved over time or with tools?</p>
+            <p class="fragment">Focus on the most frequent failure modes</p>
+          </section>
+          <section>
+            <style>
+             b {
+               text-decoration: underline;
+             }
+            </style>
+            <h3>Conclusions from prior work</h3>
+            <ul style="font-size: 80%">
+              <li class="fragment">Source is a significant problem (<b>C</b>, <b>Gu</b>, <b>V</b>)</li>
+              <li class="fragment">Common reason: labor to distribute and support (<b>C</b>, <b>Go</b>)</li>
+              <li class="fragment">Even once src is available, it might not build/run (<b>C</b>, <b>T</b>, <b>Wa</b>)</li>
+              <li class="fragment">Common reason: environment underspecified(<b>Wa</b>, <b>T</b>, <b>Z</b>)</li>
+              <li class="fragment">Even when runnable, result may be different due to platform differences (<b>D</b>, <b>K</b>, <b>P</b>, <b>N</b>)</li>
+              <li style="font-size: 80%">
+                <a href="https://doi.org/10.1145/2812803"><b>C</b>ollberg and Proebsting 2016</a>,
+                <a href="https://doi.org/10.1038/nbt.3820"><b>D</b>i Tomaso et al. 2017</a>,
+                <a href="https://doi.org/10.1098/rspb.2022.1113"><b>Go</b>mes et al. 2022</a>,
+                <a href="https://doi.org/10.1609/aaai.v32i1.11503"><b>Gu</b>underson and Kjensmo 2018</a>,
+                <a href="https://doi.org/10.1145/3322790.3330595"><b>K</b>rafczyk et al. 2019</a>,
+                <a href="https://doi.org/10.1021/acs.orglett.9b03216"><b>N</b>eupane et al. 2019</a>,
+                <a href="https://doi.org/10.1109/MSR.2019.00077"><b>P</b>imentel et al. 2019</a>,
+                <a href="https://doi.org/10.1038/s41597-022-01143-6"><b>Tr</b>isovic et al. 2021</a>,
+                <a href="https://doi.org/10.1109/MSP.2009.932122"><b>V</b>andewalle et al. 2009</a>,
+                <a href="https://doi.org/10.1145/3324884.3416585"><b>Wa</b>ng et al. 2021</a>,
+                <a href="https://doi.org/10.1109/eScience.2012.6404482"><b>Z</b>hao et al. 2012</a>,
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>Reproducibility in workflows</h3>
+            <ul>
+              <li class="fragment">Workflow := language for digraph of coarse-grained tasks</li>
+              <li class="fragment">Orchestration helps eliminate "what to run? how to run it?" problems</li>
+            </ul>
+            <img alt="Gene processing workflow" src="./workflow.png" style="height: 30vh" />
+          </section>
+          <section>
+            <p>
+              <strong>Grayson</strong>, Marinov, Katz, Milewicz.
+              <i>Automatic Reproduction of Workflows in the Snakemake Workflow Catalog and nf-core Registries.</i><br />
+              ACM REP '23
+              <a href="https://doi.org/10.1145/3589806.3600037">10.1145/3589806.3600037</a>
+            </p>
+          </section>
+          <section>
+            <ul>
+              <li class="fragment"><a href="https://workflows.community/">Workflows.community</a> &rarr; workflow corpora</li>
+              <li class="fragment"><a href="https://snakemake.readthedocs.io/en/stable/">Snakemake</a> (2012 &ndash; present) and <a href="https://nextflow.io/">Nextflow</a> (2013 &ndash; present)</li>
+              <li class="fragment">Each node can be containerized or Conda-sandboxed</li>
+              <li class="fragment">Should be better than arbitrary programs</li>
+            </ul>
+          </section>
+          <section>
+            <figure>
+              <figcaption>
+                Distribution of error modes for Snakemake and Nextflow workflows in Grayson et al. 2023.
+              </figcaption>
+              <!-- TODO: Make this a bar chart
+                   TODO: What does SWC and NFC stand for? -->
+              <img
+                style="height: 40vw;"
+                alt="Bar char of Zhao et al.'s error classification"
+                src="./swc-nfc.png" />
+            </figure>
+          </section>
+          <section>
+            <figure>
+              <figcaption>
+                Survival analysis curves of workflows in Grayson et al. 2023.
+              </figcaption>
+              <!-- TODO: Make this a bar chart -->
+              <img
+                style="height: 40vw;"
+                alt="Bar char of Zhao et al.'s error classification"
+                src="./SurvivalCurveUpdated.png" />
+            </figure>
+          </section>
+          <section data-visibility="hidden">
+            <h3 class="outline-ignored">Talk</h3>
+            <p>
+              <strong>Grayson</strong>, Marinov, Katz, Milewicz.
+              <i>Wanted: standards for automatic reproducibility of computational experiments.</i>
+              SE4RS '23 <br />
+              <a href="https://arxiv.org/abs/2307.11383">arXiv:2307.11383</a>
+            </p>
+          </section>
+          <section data-visibility="hidden">
+            <ul>
+              <li class="fragment">Standard loc <emph>in</emph> code repository for sem. data <emph>about</emph> repository</li>
+              <li class="fragment">Use semantic web ontologies to describe experiment</li>
+              <li class="fragment">Including "main" command</li>
+              <li class="fragment">Link semantics ("what") to computation ("how")</li>
+            </ul>
+          </section>
+          <section>
+            <h3 class="outline-ignored">Conclusions</h3>
+            <ul>
+              <li class="fragment">Primary reason: Labor required to package and explain</li>
+              <li class="fragment">Workflows and environments help, but not everything</li>
+              <li class="fragment">Average lifetime is only a few years</li>
+              <li class="fragment">Linking problems could benefit to sem. web</li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2 id="technical-soln">Technical approaches to automatic reproducibility</h2>
+            <img
+              style="height: 50vh"
+              src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Printer_in_1568-ce.png">
+          </section>
+          <section>
+            <ol data-outlineCurrent="technical-soln" class="toc"></ol>
+          </section>
+          <section>
+            <h3>Prior approaches</h3>
+            <ul>
+              <li class="fragment">Package managers, e.g., Nix, Spack</li>
+              <li class="fragment">Virtualization, e.g., Docker</li>
+              <li class="fragment">Sys-level provenance, e.g., RR-debugger</li>
+            </ul>
+          </section>
+          <section>
+            <h3 class="outline-ignored">Package managers</h3>
+            <blockquote>
+                <p>
+                  It is pretty easy to be confused. Especially since it is also a language yet all the other replies at the time have writing have failed to mention that.
+                </p>
+                <p>
+                  Conceptually I'm having a hard time wrapping my head around it since package managers are so tightly tied to an OS... I feel like surely I can't just use it in place of (say) apt or pacman without causing problems? And I haven't even gotten to the language/shell/etc. as you mention...
+                </p>
+                <p>
+                  <a href="https://news.ycombinator.com/item?id=23251754">Source</a>
+                </p>
+            </blockquote>
+          </section>
+          <section>
+            <!-- TODO: Bolster with citaitons -->
+            <h3 class="outline-ignored">Virtualization (image)</h3>
+            <ol>
+              <li class="fragment">Distribute VM/container image</li>
+              <li class="fragment">Too expensive to store many such images</li>
+              <li class="fragment">DockerHub can delete after 6 months</li>
+              <li class="fragment">6% of images were not pullable in my Workflows study</li>
+            </ol>
+          </section>
+          <section>
+            <h3 class="outline-ignored">Virtualization (build script)</h3>
+            <ol class="small">
+              <li class="fragment">Distribute VM/container build script</li>
+              <li class="fragment">Tradeoff between reproducibility (exact tag) and availability (loose tag)</li>
+              <li class="fragment">Is the second line <code style="font-weight: bold">apt-get update</code>?</li>
+              <li class="fragment">55% of dependency specs incomplete (<a href="https://doi.org/10.1109/eScience51609.2021.00032">Shaffer et al. 2021</a>)</li>
+              <li class="fragment">Of those, 50% of were non-reproducible in 10 days (<a href="https://doi.org/10.1109/eScience51609.2021.00032">Shaffer et al. 2021</a>)</li>
+              <li class="fragment">This method can work, but it needs a repro-ible package manager</li>
+            </ul>
+            </ol>
+          </section>
+          <section>
+            <h3>Computational provenance</h3>
+            <ol>
+              <li class="fragment">Process by which a file was created</li>
+              <li class="fragment">Inputs to that process</li>
+              <li class="fragment">Provenance of those inputs</li>
+            </ol>
+          </section>
+          <section data-visibility="hidden">
+            <h3 class="outline-ignored">Provenance example</h3>
+            <pre><code>curl -o https://data.com
+python script.py</code></pre>
+            <figure class="fragment">
+              <img src="./prov.svg">
+            </figure>
+          </section>
+          <section>
+            <ul>
+              <li>Handles missing environment</li>
+              <li>Handles missing data</li>
+              <li>Even username comes from files</li>
+              <li>Similar to workflows, but "observed" deps rather than "reported"</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Review of sys-level prov tracers</h3>
+            <p>
+              <strong>Grayson</strong>, Aguilar, Milewicz, Katz, Marinov.
+              <i>A benchmark suite and performance analysis of user-space provenance collectors.</i>
+              ACM REP '24
+              <a href="https://doi.org/10.1145/3641525.3663627">10.1145/3641525.3663627</a>
+            </p>
+            <p>Search queries: "Computational provenance" & "System-level provenance"</p>
+            <p>Feasibility study</p>
+            <p>Benchmarking</p>
+          </section>
+          <section>
+            <h3 class="outline-ignored">Linux sys-level prov tracers</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 20%">Strategy</th>
+                  <th style="width: 15%">Modified kernel?</th>
+                  <th style="width: 15%">Privileges required?</th>
+                  <th style="width: 50%">Provenance tracer</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Modify kernel</td>
+                  <td class="red-hl">yes</td>
+                  <td class="red-hl">yes</td>
+                  <td>PASSv2, CamFlow, &hellip;</td>
+                </tr>
+                <tr>
+                  <td>Built-in auditing</td>
+                  <td class="green-hl">no</td>
+                  <td class="red-hl">yes</td>
+                  <td>SPADE, eBPF, &hellip;</td>
+                </tr>
+                <tr class="fragment custom green-text">
+                  <td>User tracing</td>
+                  <td class="green-hl">no</td>
+                  <td class="green-hl">no</td>
+                  <td>Sciunit, ReproZip, &hellip;</td>
+                </tr>
+              </tbody>
+              <tfoot>
+              </tfoot>
+            </table>
+          </section>
+          <section>
+            <img
+              style="height: 40vw"
+              src="./funnel.png"
+            />
+          </section>
+          <section>
+            <p>Performance is critical to usability</p>
+            <p>Measure "percent overhead". 100% means runtime x &rarr; 2x with prov</p>
+            <p>ReproZip avg overhead was 193%</p>
+          </section>
+          <section>
+            <h3 class="outline-ignored">Performance</h3>
+            <table style="font-size: 65%">
+              <thead>
+                <tr><th>Benchmark        </th><th>fsatrace      </th><th>strace              </th><th>ReproZip           </th></tr>
+              </thead>
+              <tbody>
+           <!-- <tr><td>SPLASH-3         </td><td>5             </td><td            >16      </td><td class="no">75      </td></tr> -->
+           <!-- <tr><td>Jupyter Notebook </td><td>4             </td><td            >32      </td><td class="no">174     </td></tr> -->
+                <tr><td>BLAST            </td><td>0             </td><td            >2       </td><td           >8       </td></tr>
+                <!-- <tr><td>HTTP srv/client  </td><td>-23           </td><td            >33      </td><td class="no">248     </td></tr> -->
+           <!-- <tr><td>Compile w/latex  </td><td>7             </td><td class="mid">40      </td><td class="no">288     </td></tr> -->
+           <!-- <tr><td>Utils bash       </td><td>5             </td><td            >20      </td><td class="no">2933    </td></tr> -->
+                <tr><td>Tar Unarchive    </td><td>4             </td><td class="no" >114     </td><td class="no">149     </td></tr>
+                <tr><td>Python import    </td><td>5             </td><td class="mid">84      </td><td class="no">346     </td></tr>
+                <tr><td>VCS checkout     </td><td>5             </td><td class="no" >160     </td><td class="no">428     </td></tr>
+                <!-- <tr><td>Tar Archive      </td><td>0             </td><td class="no" >113     </td><td class="no">140     </td></tr> -->
+           <!-- <tr><td>Compile w/Spack  </td><td>-1            </td><td class="no" >111     </td><td class="no">359     </td></tr> -->
+           <!-- <tr><td>Utils            </td><td>17            </td><td class="no" >280     </td><td class="no">697     </td></tr> -->
+           <!-- <tr><td>Compile w/gcc    </td><td>4             </td><td class="no" >206     </td><td class="no">344     </td></tr> -->
+           <!-- <tr><td>HTTP srv/traffic </td><td>5             </td><td class="no" >414     </td><td class="no">724     </td></tr> -->
+                <tr><td>Postmark         </td><td>2             </td><td class="no" >650     </td><td class="no">1733    </td></tr>
+                <tr><td>cp               </td><td class="mid">37</td><td class="no" >380     </td><td class="no">5791    </td></tr>
+                <tr><td>Others not shown </td><td>&hellip;      </td><td>&hellip;            </td><td>&hellip;           </td></tr>
+                <tr class="important">
+                  <td>Geometric mean     </td><td>0             </td><td class="no">66      </td><td class="no">193     </td></tr>
+              </tbody>
+            </table>
+          </section>
+          <section>
+            <h3 class="outline-ignored">ptrace</h3>
+            <img
+              style="height: 50vh"
+              src="ptrace.svg"
+            />
+          </section>
+          <section>
+            <h3 class="outline-ignored">Library interposition</h3>
+            <img
+              style="height: 50vh"
+              src="./lib_interpose.svg"
+            />
+          </section>
+          <section>
+            <h3 class="outline-ignored">Talk</h3>
+            <p>
+              <strong>Grayson</strong>, Milewicz, Katz, Marinov.
+              <i>PROBRSE: Provenance Replay/Observation Engine for Research Soware Engineers.</i>
+              US-RSE '24
+              <a href="https://doi.org/10.5281/zenodo.13963643">10.5281/zenodo.13963643</a>
+            </p>
+          </section>
+          <section>
+            <h3>PROBE</h3>
+            <ul>
+              <li>Speed</li>
+              <li>Reuse environment for new exe</li>
+              <li>ptrace &rarr; library interposition</li>
+            </ul>
+          </section>
+          <section>
+            <pre style="font-size: 4vh;"><code><span class="fragment">$ probe record ./script.sh</span>
+<span class="fragment">$ probe export dataflow-graph</span></code></pre>
+            <img
+              class="fragment"
+              alt="example dataflow graph"
+              src="./dataflow.svg"
+            />
+          </section>
+          <section>
+            <pre style="font-size: 3vh;"><code><span class="fragment">$ probe record ./script.sh
+hello world</span>
+<span class="fragment">$ probe export docker-image test:1.0.0</span>
+<span class="fragment">$ docker run --rm test:1.0.0
+hello world</span></code></pre>
+          </section>
+          <section>
+            <p><emph>(Planned feature)</emph></p>
+            <pre style="font-size: 3vh;"><code><span class="fragment">$ probe record ./script.sh
+hello world
+</span>
+<span class="fragment">$ probe export spack-env</span>
+<span class="fragment">$ # Send spack-env.tar.gz to your friends
+</span>
+<span class="fragment">$ tar xvf spack-env.tar.gz</span>
+<span class="fragment">$ cd spack-env</span>
+<span class="fragment">$ ./script.sh
+hello world</span></code></pre>
+          </section>
+
+          <section>
+            <h3 class="outline-ignored">Conclusion</h3>
+            <ol>
+              <li class="fragment">System-level provenance tracing can address missing dependencies/data</li>
+              <li class="fragment">Existing system-level provenance tracers require root or are too slow</li>
+              <li class="fragment">Library interposition may be faster than traditional tracing</li>
+            </ol>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2 id="proposed">Proposed work</h2>
+            <img
+              alt="Transformation from caterpillar to butterfly"
+              src="https://t3.ftcdn.net/jpg/03/51/40/20/360_F_351402022_Dx6yILBvfp8L7T2QOhsmKgYhHHR4GBuK.jpg"
+            />
+          </section>
+          <section>
+            <img
+              style="width:100vh;"
+            src="./my_work.svg"
+            >
+          </section>
+          <section>
+            <h3>PROBE: Provenance Replay OBservation Engine</h3>
+            <ul>
+              <li class="fragment">Improve robustness of PROBE</li>
+              <li class="fragment">Performance analysis on benchmark suite</li>
+              <li class="fragment">Workflow Run RO-Crate (WRROC), (uses RO-terms ont.)</li>
+            </ul>
+          </section>
+          <section>
+            <img
+              style="height: 60vh; background-color: white; padding: 4%"
+              src="https://www.researchobject.org/workflow-run-crate/profiles/img/er_diagram_workflow.svg"
+            />
+          </section>
+          <section>
+            <h3>System-level provenance tracing</h3>
+            <!-- TODO: Motivate why different/better from prior work -->
+            <ul>
+              <li class="fragment">Library interp. vs user-level tracing</li>
+              <li class="fragment">Evaluate robustness c.f. other methods</li>
+              <li class="fragment">Storage cost for daily use?</li>
+              <li class="fragment">Use interoperable standards</li>
+            </ul>
+          </section>
+          <section>
+            <img src="probe-data.webp" style="height: 40vw;">
+          </section>
+          <section>
+            <h3>Reproduction of Collberg et al.</h3>
+            <ul>
+              <li class="fragment">Original study looks at 11 CS journal/conf 3 years later; tries to "build environment" for those papers</li>
+              <li class="fragment">Has the status of the artifacts changed? &rarr; esimtate decay rate</li>
+              <li class="fragment">Same procedure on new data yield different answer? &rarr; improvements</li>
+              <li class="fragment">Can PROBE encapsulate dependencies in real-world cases? at what cost?</li>
+            </ul>
+          </section>
+          <section>
+            <h3>PROBE @ Sandia experience</h3>
+            <ul>
+              <li class="fragment">Unforseen system integration issues</li>
+              <li class="fragment">Storage and performance cost in real-world env</li>
+              <li class="fragment">User test with think-aloud protocol</li>
+            </ul>
+          </section>
+          <section class="outline-ignore">
+            <!-- TODO: this -->
+            <h3>Schedule</h3>
+            <ul class="small tightlist">
+              <li class="fragment">2025 Dec 01: stablize PROBE's core funcitonality</li>
+              <li class="fragment">2025 Dec 20: stabalize reproduced C&P dataset</li>
+              <li class="fragment"><strong>2025 Jan 14:</strong> USENIX ATC '25 submission deadline (PROBE)</li>
+              <li class="fragment"><strong>2025 Mar 22 (expected):</strong> ICSE '25 submission deadline (reproduce C&amp;P)</li>
+              <li class="fragment"><strong>2025 May 28 (expected):</strong> PROBE @ Sandia experience report</li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Conclusion</h2>
+            <img
+              alt="A long road ahead"
+              src="http://upload.wikimedia.org/wikipedia/commons/7/74/The_Long_Road_Ahead.jpg"
+              style="height: 60vh"
+            />
+          </section>
+          <section>
+            <h3>Takeaways</h3>
+            <ol>
+              <li class="fragment">
+                &exist; valuable but unexplored technical approaches to improve reproducibility
+              </li>
+              <li class="fragment">
+                It is feasible to research those for my 12-month thesis.
+              </li>
+            </ol>
+          </section>
+          <section>
+            <h3>Future work</h3>
+            <ul>
+              <li class="fragment">Use environment manipulation (from provenance) for automatic repair</li>
+              <li class="fragment">User-testing of repro tools</li>
+              <li class="fragment">Sem web integration</li>
+            </ul>
+          </section>
+        <section>
+          <section>
+            <h2 class="outline-ignored">Backup slides</h2>
+          </section>
+          <section>
+            <div style="font-size: 1.5em">
+              \[ f_h(x, c) = (y, c') \]
+            </div>
+            <ul>
+              <li>\(f\): run function</li>
+              <li>\(x\): user input (measurement procedure)</li>
+              <li>\(y\): user output (measurement)</li>
+              <li>\(h\): hardware and kernel (measurment system)</li>
+              <li>\(c, c'\): configuration function: \(\mathbb C \to \mathbb A\) (operating conditions)</li>
+            </ul>
+          </section>
+        </section>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+    <script>
+      /*<![CDATA[*/
+      Reveal.initialize({
+        hash: true,
+        slideNumber: "c/t",
+        transition: "none",
+      });
+      Array.from(document.querySelectorAll("a.img-link")).forEach(elem => {
+        new QRCode(elem, {
+          text: elem.href,
+          width: 1024,
+          height: 1024,
+          useSVG: true,
+        });
+        Array.from(elem.getElementsByTagName("img")).forEach(img => {
+          img.style["margin-left" ] = "auto";
+          img.style["margin-right"] = "auto";
+          img.style["height"] = "25rem";
+        });
+      });
+      function createElem(tag, children, style) {
+        const elem = document.createElement(tag);
+        for (child of children) {
+          elem.append(child);
+        }
+        if (style) {
+          for (prop in style) {
+            elem.style[prop] = style[prop];
+          }
+        }
+        return elem;
+      }
+      Array.from(document.getElementsByClassName("toc")).forEach(tocElem => {
+        const currentHeaderElem = document.getElementById(tocElem.dataset.outlinecurrent);
+        Array.from(document.querySelectorAll("h2:not(.outline-ignored)")).forEach(header => {
+          tocElem.append(createElem("li",
+                                    header === currentHeaderElem
+                                  ? [
+                                    createElem("strong", header.innerHTML, {"color": "rgb(255, 255, 220)",}),
+                                    createElem(
+                                      "ol",
+                                      Array.from(
+                                        header
+                                          .parentElement
+                                          .parentElement
+                                          .querySelectorAll("section:not([data-visibility=\"hidden\"]) > h3:not(.outline-ignored)")
+                                      )
+                     .map(subHeader => {
+                       return createElem("li", [
+                         subHeader.dataset.outlinevalue || subHeader.innerHTML
+                       ], {
+                         "padding-bottom": "0.2ex",
+                         "padding-top": "0.2ex",
+                         "font-size": "75%",
+                       });
+                     })
+                ),
+            ]
+                                  : [header.innerHTML],
+          ));
+        });
+      });
+      /*]]*/
+    </script>
+  </body>
+</html>

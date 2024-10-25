@@ -275,13 +275,15 @@ There are several proposed approach associated with proactively facilitating rep
 |---------------------------------|---------------------------------------------|
 | Scientific clouds               | Reduces non-portable operating condions     |
 | Source artifact archival        | Ensure attainability of operating condition |
-| Workflowanagers                 | Simplify measurement procedure              |
+| Workflow managers               | Simplify measurement procedure              |
 | Provenance                      | Identifies operating conditions             |
 | Record/replay executions        | Reduces operating conditions                |
 | Virtualization/containerization | Reduces non-portable operating conditions   |
 | Digital notebooks               | Explicates measurements                     |
 
 <!-- TODO:
+Remove source artifact archival
+
 | Package managers                | Reduces non-portable operating conditions      |
 | Seeding inputs                  | Reduces non-deterministic operating conditions |
 | Coding practices                | Reduces non-deterministic operating conditions |

@@ -1,0 +1,13 @@
+digraph G {
+  wf [label="Reproducing workflows\nACM REP '23" color="green"];
+  standards [label="Sem Web standards for repro\nSE4RS '23" color="green"];
+  bench [label="Review of sys-lvl prov\nACM REP '24" color="green"];
+
+  PROBE [label="PROBE\n(in progress)" color="orange"];
+  PROBE_preview [label="PROBE preview\nUS-RSE '24" color="green"];
+
+  copr [label="Large-scale reproduction\n(in progress)" color="orange"]
+  sandia_ex [label="PROBE @ Sandia experience report\n(in progress)" color="orange"]
+
+  {wf, standards, bench, PROBE_preview} -> PROBE -> {copr, sandia_ex};
+}

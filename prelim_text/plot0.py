@@ -1,16 +1,20 @@
 import matplotlib.figure
 import numpy
 
+xmin = 0
+xmax = 2
+xmid = 0.5
+old_curve = lambda x: numpy.sqrt(x)
+new_curve = lambda x: 3 * numpy.sqrt(x)
+
 fig = matplotlib.figure.Figure()
 ax = fig.add_subplot()
-xmin = 0.1
-xmax = 2
 xs = numpy.linspace(xmin, xmax, 100)
-ax.plot(xs, 2 / xs, label="status quo")
-ax.plot(xs, 1 / xs, label="with reproducibility tools")
+line = ax.plot(xs, old_curve(xs), label="status quo")
+baseline     = ax.plot([xmid, xmid], [0, old_curve(xmid)], color="black", linestyle="--")
+baseline_dot = ax.plot([xmid      ], [   old_curve(xmid)], color="black", marker="o")
 ax.set_xlim(0, xmax)
-ax.legend()
-ax.set_ylim(0, 1 / xmin)
+ax.set_ylim(0, new_curve(xmax))
 ax.set_xlabel("Effort")
 ax.set_ylabel("Reproducibility")
 ax.set_xticks([])
@@ -39,3 +43,12 @@ for axis_min, axis_max, symbol, transform in [
     )
 
 fig.savefig("plot0.pdf")
+fig.savefig("plot0.svg")
+
+for seg in [*line, *baseline, *baseline_dot]:
+    seg.remove()
+
+line = ax.plot(xs, new_curve(xs), label="with reproducibility tools")
+baseline     = ax.plot([xmid, xmid], [0, new_curve(xmid)], color="black", linestyle="--")
+baseline_dot = ax.plot([xmid      ], [   new_curve(xmid)], color="black", marker="o")
+fig.savefig("plot1.svg")

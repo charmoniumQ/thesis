@@ -1,0 +1,110 @@
+center {
+    margin-left: auto;
+    margin-right: auto;
+}
+.small {
+    font-size: 80%;
+}
+li {
+    padding-bottom: 0.3em;
+    padding-top: 0.3em;
+}
+.small-list li {
+    padding-bottom: 0.0em;
+}
+.reveal h1 {
+    font-size: 2em;
+    text-transform: none !important;
+    /* font-weight: normal; */
+}
+.reveal h2 {
+    font-size: 1.75em;
+    text-transform: none !important;
+    /* font-weight: normal; */
+}
+.reveal h3 {
+    font-size: 1.5em;
+    text-transform: none !important;
+    /* font-weight: normal; */
+}
+.reveal h4 {
+    text-transform: none !important;
+    /* font-weight: normal; */
+}
+.reveal table {
+    color: white;
+    font-size: 0.7em;
+}
+.reveal table td {
+    text-align: center;
+}
+.green-hl {
+    background-color: rgb(0, 70, 0);
+}
+.yellow-hl {
+    background-color: rgb(70, 70, 0);
+}
+.red-hl {
+    background-color: rgb(70, 0, 0);
+}
+.green-text.fragment {
+    color: var(--r-main-color);
+}
+.green-text.fragment.visible,
+.green-text:not(fragment)
+{
+    color: rgb(170, 255, 170);
+}
+.yellow-text {
+    color: rgb(230, 230, 150);
+}
+.red-text {
+    color: rgb(255, 170, 170);
+}
+.highlight.fragment {
+    color: var(--r-main-color);
+}
+.highlight.fragment.visible,
+.highlight:not(fragment)
+{
+    color: rgb(255, 130, 130);
+}
+.reveal .slide-number {
+    font-size: 50%;
+    right: 10%;
+    bottom: 5%;
+}
+tr.important {
+    border-top: 1px solid;
+    font-weight: bold;
+}
+table td, table th {
+    border-bottom: none !important;
+}
+table thead {
+    border-bottom: 1px solid;
+    font-weight: bold;
+}
+figure.besides {
+    display: flex;
+    flex-flow: row;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+}
+figure.besides img {
+    height: 4em;
+    width: auto;
+    margin: 0;
+}
+figure.besides figcaption {
+    margin-left: 1em;
+}
+.yes {
+    background-color: rgb(0, 70, 0);
+}
+.mid {
+    background-color: rgb(70, 70, 0);
+}
+.no {
+    background-color: rgb(70, 0, 0);
+}

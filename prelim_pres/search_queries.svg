@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="237pt" height="222pt"
+     viewBox="0.00 0.00 236.63 221.60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 217.6)">
+    <title>G</title>
+    <polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-217.6 232.6285,-217.6 232.6285,4 -4,4"/>
+    <g id="node1" class="node">
+      <title>lit0</title>
+      <ellipse fill="none" stroke="#000000" cx="46.7054" cy="-195.6" rx="46.9117" ry="18"/>
+      <text text-anchor="middle" x="46.7054" y="-191.4" font-family="Times,serif" font-size="14.00" fill="#000000">1st query</text>
+    </g>
+    <g id="node3" class="node">
+      <title>secondary studies</title>
+      <ellipse fill="none" stroke="#000000" cx="96.7054" cy="-106.8" rx="63.1428" ry="18"/>
+      <text text-anchor="middle" x="96.7054" y="-102.6" font-family="Times,serif" font-size="14.00" fill="#000000">3 secondary studies</text>
+    </g>
+    <g id="edge1" class="edge">
+      <title>lit0&#45;&gt;secondaries</title>
+      <path fill="none" stroke="#000000" d="M56.8236,-177.63C63.9397,-164.9919 73.5849,-147.862 81.6074,-133.614"/>
+      <polygon fill="#000000" stroke="#000000" points="84.7456,-135.1742 86.6022,-124.7433 78.646,-131.7397 84.7456,-135.1742"/>
+      <text text-anchor="middle" x="80.2054" y="-147" font-family="Times,serif" font-size="14.00" fill="#000000">7</text>
+    </g>
+    <g id="node4" class="node">
+      <title>primary studies</title>
+      <ellipse fill="none" stroke="#000000" cx="96.7054" cy="-18" rx="59.6486" ry="18"/>
+      <text text-anchor="middle" x="96.7054" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">26 primary studies</text>
+    </g>
+    <g id="edge4" class="edge">
+      <title>lit0&#45;&gt;primaries</title>
+      <path fill="none" stroke="#000000" d="M34.806,-178.0178C21.7476,-156.3731 4.3074,-118.7984 17.7054,-88.8 26.5954,-68.8951 44.1536,-52.2609 60.4637,-40.1284"/>
+      <polygon fill="#000000" stroke="#000000" points="62.6921,-42.839 68.8265,-34.2007 58.6441,-37.1281 62.6921,-42.839"/>
+      <text text-anchor="middle" x="21.2054" y="-102.6" font-family="Times,serif" font-size="14.00" fill="#000000">5</text>
+    </g>
+    <g id="node2" class="node">
+      <title>lit1</title>
+      <ellipse fill="none" stroke="#000000" cx="178.7054" cy="-195.6" rx="49.8463" ry="18"/>
+      <text text-anchor="middle" x="178.7054" y="-191.4" font-family="Times,serif" font-size="14.00" fill="#000000">2nd query</text>
+    </g>
+    <g id="edge2" class="edge">
+      <title>lit1&#45;&gt;secondaries</title>
+      <path fill="none" stroke="#000000" d="M162.895,-178.4785C150.6885,-165.2598 133.6186,-146.7743 119.8713,-131.887"/>
+      <polygon fill="#000000" stroke="#000000" points="122.3841,-129.4491 113.0285,-124.4768 117.2414,-134.198 122.3841,-129.4491"/>
+      <text text-anchor="middle" x="148.2054" y="-147" font-family="Times,serif" font-size="14.00" fill="#000000">1</text>
+    </g>
+    <g id="edge5" class="edge">
+      <title>lit1&#45;&gt;primaries</title>
+      <path fill="none" stroke="#000000" d="M180.6503,-177.6093C182.243,-155.5527 182.3725,-117.563 168.7054,-88.8 159.7543,-69.9621 143.5732,-53.3425 128.8151,-40.9479"/>
+      <polygon fill="#000000" stroke="#000000" points="130.8018,-38.054 120.8175,-34.5093 126.4121,-43.5066 130.8018,-38.054"/>
+      <text text-anchor="middle" x="182.2054" y="-102.6" font-family="Times,serif" font-size="14.00" fill="#000000">1</text>
+    </g>
+    <g id="edge3" class="edge">
+      <title>secondaries&#45;&gt;primaries</title>
+      <path fill="none" stroke="#000000" d="M96.7054,-88.4006C96.7054,-76.2949 96.7054,-60.2076 96.7054,-46.4674"/>
+      <polygon fill="#000000" stroke="#000000" points="100.2055,-46.072 96.7054,-36.072 93.2055,-46.0721 100.2055,-46.072"/>
+      <text text-anchor="middle" x="103.7054" y="-58.2" font-family="Times,serif" font-size="14.00" fill="#000000">20</text>
+    </g>
+  </g>
+</svg>

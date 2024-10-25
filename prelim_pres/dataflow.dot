@@ -1,0 +1,14 @@
+digraph G {
+  head [label="/bin/head" shape=note];
+
+  A_txt [label="A.txt" shape=note];
+  B_txt [label="B.txt" shape=note];
+  C_txt [label="C.txt" shape=note];
+  D_txt [label="D.txt" shape=note];
+
+  head123 [label="head\n(pid 123)"];
+  head456 [label="head\n(pid 123)"];
+
+  {head, A_txt} -> head123 -> B_txt;
+  {head, B_txt, C_txt} -> head456 -> D_txt;
+}

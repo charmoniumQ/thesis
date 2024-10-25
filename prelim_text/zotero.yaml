@@ -7501,7 +7501,7 @@ references:
   source: www.nature.com
   title: Nextflow enables reproducible computational workflows
   type: article-journal
-  URL: https://www.nature.com/articles/nbt.3820%7B
+  URL: https://www.nature.com/articles/nbt.3820
   volume: '35'
 
 - id: doctorowMetacrap2001
@@ -9318,6 +9318,45 @@ references:
   type: report
   URL: https://www.osti.gov/biblio/1842590
 
+- id: ferroSIGIRInitiativeImplement2018
+  abstract: >-
+    Recently, the ACM created a policy on Artifact Review and Badging, which
+    presents a framework to help SIGs recognize repeatability, replicability and
+    reproducibility in published research. While the ACM policy established a
+    vocabulary and definitions, it did not prescribe procedures for
+    implementation. Rather, the ACM has left this to each SIG to define given
+    the variety of research traditions and approaches that exist with the ACM
+    community. SIGs are not required to implement badging, but given the growing
+    interest in this topic in the SIGIR community, a task force has been
+    assembled to determine how badging might be implemented. This report
+    describes the ACM policy on Artifact Review and Badging, introduces the task
+    force, and presents survey data describing the SIGIR community's opinions
+    about this initiative.
+  accessed:
+    - year: 2024
+      month: 10
+      day: 23
+  author:
+    - family: Ferro
+      given: Nicola
+    - family: Kelly
+      given: Diane
+  citation-key: ferroSIGIRInitiativeImplement2018
+  container-title: SIGIR Forum
+  DOI: 10.1145/3274784.3274786
+  ISSN: 0163-5840
+  issue: '1'
+  issued:
+    - year: 2018
+      month: 8
+      day: 31
+  page: 4–10
+  source: ACM Digital Library
+  title: SIGIR Initiative to Implement ACM Artifact Review and Badging
+  type: article-journal
+  URL: https://dl.acm.org/doi/10.1145/3274784.3274786
+  volume: '52'
+
 - id: fienbergWhenDidBayesian2006
   abstract: >-
     While Bayes' theorem has a 250-year history, and the method of inverse
@@ -10881,6 +10920,69 @@ references:
   source: Zotero
   title: Potential Computational Linguistics Resources
   type: report
+
+- id: gomesWhyDontWe2022
+  abstract: >-
+    The biological sciences community is increasingly recognizing the value of
+    open, reproducible and transparent research practices for science and
+    society at large. Despite this recognition, many researchers fail to share
+    their data and code publicly. This pattern may arise from knowledge barriers
+    about how to archive data and code, concerns about its reuse, and misaligned
+    career incentives. Here, we define, categorize and discuss barriers to data
+    and code sharing that are relevant to many research fields. We explore how
+    real and perceived barriers might be overcome or reframed in the light of
+    the benefits relative to costs. By elucidating these barriers and the
+    contexts in which they arise, we can take steps to mitigate them and align
+    our actions with the goals of open science, both as individual scientists
+    and as a scientific community.
+  accessed:
+    - year: 2024
+      month: 10
+      day: 23
+  author:
+    - family: Gomes
+      given: Dylan G. E.
+    - family: Pottier
+      given: Patrice
+    - family: Crystal-Ornelas
+      given: Robert
+    - family: Hudgins
+      given: Emma J.
+    - family: Foroughirad
+      given: Vivienne
+    - family: Sánchez-Reyes
+      given: Luna L.
+    - family: Turba
+      given: Rachel
+    - family: Martinez
+      given: Paula Andrea
+    - family: Moreau
+      given: David
+    - family: Bertram
+      given: Michael G.
+    - family: Smout
+      given: Cooper A.
+    - family: Gaynor
+      given: Kaitlyn M.
+  citation-key: gomesWhyDontWe2022
+  container-title: 'Proceedings of the Royal Society B: Biological Sciences'
+  DOI: 10.1098/rspb.2022.1113
+  issue: '1987'
+  issued:
+    - year: 2022
+      month: 11
+      day: 23
+  language: en
+  page: '20221113'
+  publisher: Royal Society
+  source: royalsocietypublishing.org (Atypon)
+  title: >-
+    Why don't we share data and code? Perceived barriers and benefits to public
+    archiving practices
+  title-short: Why don't we share data and code?
+  type: article-journal
+  URL: https://royalsocietypublishing.org/doi/10.1098/rspb.2022.1113
+  volume: '289'
 
 - id: gomez-diazEvaluationResearchSoftware2019
   abstract: >-
@@ -13844,6 +13946,47 @@ references:
   URL: https://ui.adsabs.harvard.edu/abs/2013ApJS..208...19H
   volume: '208'
 
+- id: hitchcockEffectOpenAccess2004
+  abstract: >-
+    Since 1998 studies have shown that open access increases impact as measured
+    by the number of citations. This chronological and comprehensive
+    bibliography of those reports provides a way of investigating the meaning of
+    that statement, to understand its effect, to recognise the significant
+    factors involved, and identify the causal relationships between the
+    respective factors. Reviews in 2010 suggest a ratio of between 5.5:1 and 7:1
+    of studies showing an open access citation advantage against those that do
+    not. The bibliography also lists the Web tools available to measure impact.
+    It is a focused bibliography, on the relationship between impact and access.
+    It does not attempt to cover citation impact, or other related topics such
+    as open access, more generally, although some key papers in these areas are
+    listed as jump-off points for wider study. Other important effects can be
+    found in the area of research assessment. There is an occasionally updated
+    section on the correlation between research access, impact and assessment.
+    This is a snapshot of the bibliography taken towards the end June 2013. The
+    research on this topic continues, as does the updated version of the
+    bibliography.
+  accessed:
+    - year: 2024
+      month: 10
+      day: 23
+  author:
+    - family: Hitchcock
+      given: Steve
+  citation-key: hitchcockEffectOpenAccess2004
+  genre: Monograph
+  issued:
+    - year: 2004
+      month: 9
+      day: 15
+  language: en
+  publisher: University of Southampton
+  title: >-
+    The effect of open access and downloads ('hits') on citation impact: a
+    bibliography of studies
+  title-short: The effect of open access and downloads ('hits') on citation impact
+  type: webpage
+  URL: http://opcit.eprints.org/oacitation-biblio.html
+
 - id: hoeflerBenchmarkingDataScience2022
   abstract: >-
     We humorously discuss 12 fallacies when focusing on compute performance that
@@ -14846,6 +14989,26 @@ references:
   title: Inside The Python Virtual Machine
   type: book
   URL: https://leanpub.com/insidethepythonvirtualmachine
+
+- id: InternationalVocabularyMetrology2012
+  accessed:
+    - year: 2024
+      month: 10
+      day: 25
+  authority: JCGM
+  citation-key: InternationalVocabularyMetrology2012
+  DOI: 10.59161/JCGM200-2012
+  issued:
+    - year: 2012
+  language: en
+  number: '200:2012'
+  publisher: JCGM
+  title: >-
+    International Vocabulary of Metrology – Basic and general concepts and
+    associated terms (VIM)
+  type: standard
+  URL: https://www.bipm.org/doi/10.59161/JCGM200-2012
+  version: 3rd Ed
 
 - id: ioannidisDiscussionWhyEstimate2014
   abstract: >-
@@ -32206,6 +32369,68 @@ references:
   type: paper-conference
   URL: https://doi.org/10.1145/3540250.3549172
 
+- id: winterRetrospectiveStudyOne2022a
+  abstract: >-
+    Most software engineering research involves the development of a prototype,
+    a proof of concept, or a measurement apparatus. Together with the data
+    collected in the research process, they are collectively referred to as
+    research artifacts and are subject to artifact evaluation (AE) at scientific
+    conferences. Since its initiation in the SE community at ESEC/FSE 2011, both
+    the goals and the process of AE have evolved and today expectations towards
+    AE are strongly linked with reproducible research results and reusable tools
+    that other researchers can build their work on. However, to date little
+    evidence has been provided that artifacts which have passed AE actually live
+    up to these high expectations, i.e., to which degree AE processes contribute
+    to AE's goals and whether the overhead they impose is justified.  
+
+
+    We aim to fill this gap by providing an in-depth analysis of research
+    artifacts from a decade of software engineering (SE) and programming
+    languages (PL) conferences, based on which we reflect on the goals and
+    mechanisms of AE in our community. In summary, our analyses (1) suggest that
+    articles with artifacts do not generally have better visibility in the
+    community, (2) provide evidence how evaluated and not evaluated artifacts
+    differ with respect to different quality criteria, and (3) highlight
+    opportunities for further improving AE processes.
+  accessed:
+    - year: 2024
+      month: 10
+      day: 22
+  author:
+    - family: Winter
+      given: Stefan
+    - family: Timperley
+      given: Christopher S.
+    - family: Hermann
+      given: Ben
+    - family: Cito
+      given: Jürgen
+    - family: Bell
+      given: Jonathan
+    - family: Hilton
+      given: Michael
+    - family: Beyer
+      given: Dirk
+  citation-key: winterRetrospectiveStudyOne2022a
+  collection-title: ESEC/FSE 2022
+  container-title: >-
+    Proceedings of the 30th ACM Joint European Software Engineering Conference
+    and Symposium on the Foundations of Software Engineering
+  DOI: 10.1145/3540250.3549172
+  event-place: New York, NY, USA
+  ISBN: 978-1-4503-9413-0
+  issued:
+    - year: 2022
+      month: 11
+      day: 9
+  page: 145–156
+  publisher: Association for Computing Machinery
+  publisher-place: New York, NY, USA
+  source: ACM Digital Library
+  title: A retrospective study of one decade of artifact evaluations
+  type: paper-conference
+  URL: https://dl.acm.org/doi/10.1145/3540250.3549172
+
 - id: wirickLojbanToolEncoding2005
   abstract: >-
     As the Web evolves, the problem of enabling software to extract semantics
@@ -33264,6 +33489,49 @@ references:
   title: On the Reproducibility of Software Defect Datasets
   type: paper-conference
   URL: https://ieeexplore.ieee.org/document/10172645
+
+- id: zilbermanThoughtsArtifactBadging2020
+  abstract: >-
+    Reproducibility: the extent to which consistent results are obtained when an
+    experiment is repeated, is important as a means to validate experimental
+    results, promote integrity of research, and accelerate follow up work.
+    Commitment to artifact reviewing and badging seeks to promote
+    reproducibility and rank the quality of submitted artifacts.However, as
+    illustrated in this issue, the current badging scheme, with its focus upon
+    an artifact being reusable, may not identify limitations of architecture,
+    implementation, or evaluation.We propose that to improve the insight into
+    artifact reproducibility, the depth and nature of artifact evaluation must
+    move beyond simply considering if an artifact is reusable. Artifact
+    evaluation should consider the methods of that evaluation alongside the
+    varying of inputs to that evaluation. To achieve this, we suggest an
+    extension to the scope of artifact badging, and describe both approaches and
+    best practice arising in other communities. We seek to promote conversation
+    and make a call to action intended to strengthen the scientific method
+    within our domain.
+  accessed:
+    - year: 2024
+      month: 10
+      day: 23
+  author:
+    - family: Zilberman
+      given: Noa
+    - family: Moore
+      given: Andrew W.
+  citation-key: zilbermanThoughtsArtifactBadging2020
+  container-title: SIGCOMM Comput. Commun. Rev.
+  DOI: 10.1145/3402413.3402422
+  ISSN: 0146-4833
+  issue: '2'
+  issued:
+    - year: 2020
+      month: 5
+      day: 23
+  page: 60–63
+  source: ACM Digital Library
+  title: Thoughts about Artifact Badging
+  type: article-journal
+  URL: https://dl.acm.org/doi/10.1145/3402413.3402422
+  volume: '50'
 
 - id: zipperleProvenancebasedIntrusionDetection2022
   abstract: >-

@@ -1,13 +1,16 @@
+#  dot -Tsvg -omy_work.svg my_work.dot
 digraph G {
-  wf [label="Reproducing workflows\nACM REP '23" color="green"];
-  standards [label="Sem Web standards for repro\nSE4RS '23" color="green"];
-  bench [label="Review of sys-lvl prov\nACM REP '24" color="green"];
+  wf [label="Reproducing workflows\nACM REP '23" color="green" peripheries=2];
+  standards [label="Sem Web standards for repro\nSE4RS '23" color="green" peripheries=2];
+  feasibility [label="Feasibility of sys-lvl prov\nSandia Tech. Rep." color="green" peripheries=2];
+  bench [label="Benchmark of sys-lvl prov\nACM REP '24" color="green" peripheries=2];
 
-  PROBE [label="PROBE\n(in progress)" color="orange"];
-  PROBE_preview [label="PROBE preview\nUS-RSE '24" color="green"];
+  PROBE [label="PROBE\nUSENIX ATC '25?" color="orange"];
+  PROBE_preview [label="PROBE preview\nUS-RSE '24" color="green" peripheries=2];
 
-  copr [label="Large-scale reproduction\n(in progress)" color="orange"]
-  sandia_ex [label="PROBE @ Sandia experience report\n(in progress)" color="orange"]
+  copr [label="Large-scale reproduction\nICSE '25?" color="orange"]
+  sandia_ex [label="PROBE @ Sandia experience report\neScience '25?" color="orange"]
 
   {wf, standards, bench, PROBE_preview} -> PROBE -> {copr, sandia_ex};
+  feasibility -> bench;
 }

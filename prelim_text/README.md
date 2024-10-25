@@ -18,7 +18,7 @@ link-citations: true
 
 Reproducibility is essential to scientific experiments for three reasons:
 
-1. The scientific community corrects false claims by scrutinizing.
+1. The scientific community corrects false claims by applying scrutiny to judge past results.
    Scurtinizing an experiment often involves reproducing it, possibly with novel parameters.
    A reproducible experiments is easier to scrutinize, and therefore more likely to be correct, all else equal.
 
@@ -38,34 +38,45 @@ Popper defined reproducibility as a criterion for distinguishing between science
 Reproducibility also has costs, primarily in human labor needed to explain the experiment beyond that needed to disseminate the results.
 Working scientists balance the cost of reproducibility with the benefits to society or to themselves.
 
-In real-world experiments, an infinitude of possible factors must be controlled to find the desired result; it would be unfathomable that two instantiations of an experiment could give identical results.
+In real-world experiments, an multitude of possible factors must be controlled to find the desired result; it would be unfathomable that two instantiations of an experiment could give identical results.
 In contrast, for computational science experiments (from here on, **CS Exp**) on digital computers, while there are still many factors to control, perfect reproduction is quite fathomable.
 Despite this apparent advantage, CS Exps on digital computers still suffer low reproducibility rates.
 
-![Effort-vs-reproducibility tradeoff curve in the status quo and with reproducibility tools](./plot0.pdf){#fig:effort width=50%}
+![Effort-vs-reproducibility tradeoff curve in the status quo and with reproducibility tools. Introducing new technical solutions could shift the tradeoff from the blue curve to the orange curve.](./plot01.svg){#fig:effort width=50%}
 
-The status quo will not change simply by arguing for reproducibility; those arguments are widely known are already taken into account by the efficient market.
-Nor do the authors have the power to change incentives in science funding policy unilaterally.
-However, by reducing the cost of reproducibility, scientists may achieve greater reproducible with the same effort ([@fig:effort]).
-Reducing the cost is a technical problem this work attempts to solve.
+The status quo will not change simply by arguing scientists should spend more time on reproducibility; those arguments are widely known are already taken into account.
+The status quo is a result of limited time and effort budgets.
+Nor do I have the power to change incentives in science funding policy unilaterally.
+However, by reducing the cost of reproducibility, scientists may achieve greater reproducibility with the same effort ([@fig:effort]).
+**The goal of this work** is to improve the reproducibility of computational experiments achieved for an input of fixed effort.
 
+<!--
 For this work, "computational scientist" (from here on, **CS**) should be construed broadly: anyone who uses research software in the process of inquiry.
 The term includes people who use research software for data analytics and simulations, so long as scrutinizability, extensibility, and applicability are motivators.
-The term applies to professors in academia as well as analysts in a national lab.
+The term applies to faculty in academia as well as analysts in a national lab.
+-->
+
+The rest of the document will be structured as background (defining terms), prior approaches to decreasing the cost of reproducibility, my prior work on that problem, and proposed work.
 
 # Background
 
 There have been conflicting sets of definitions for the term *reproducibility* [@plesserReproducibilityVsReplicability2018].
 In this work, we use the Association for Computing Machinery (from here on, **ACM**) definition, if unspecified, although we discuss the other definitions in the prior work section.
-The ACM gave a compatible definition,
+The ACM definition for **reproducibility** reads,
 
-> **Reproducibility**:
-> (different team, same experimental setup)
 > The measurement can be obtained with stated precision by a different team using the same measurement procedure, the same measuring system, under the same operating conditions, in the same or a different location on multiple trials.
 >
 > --- [@acminc.staffArtifactReviewBadging2020]
 
-Reproducibility contrasts with **repeatability** (same team, same experimental setup) and **replicability** (different team, different experimental setup).
+**Experimental setup** encompasses the aforementioned measurment procedure, measuring system, and operating conditions.
+
+While reproducibility involves as a different team using the same experimental setup, there are similar terms to describe the other possible cases.
+
+| Term | Experimental method | Team |
+|------|------|------|
+| Repeatability | Same | Same |
+| Reproducibility | Same | Different |
+| Replicability | Different | Different |
 
 The ACM definition references more useful auxiliary terms, such as measurement procedure, operating conditions, and stated precision, so we use that for this work.
 
@@ -89,7 +100,7 @@ What about the how much effort to rerun question? THe current definition is bina
 -->
 
 These definitions derive from *metrology*, the science of measuring.
-We specialize some of the terms "measurement", "measurement procedure", and "operating conditions" in software context for computational science experiments:
+I specialize some of the terms "measurement", "measurement procedure", and "operating conditions" in software context for computational science experiments:
 
 - **Measurement procedure (for CSEs)**:
   The application code and user-interactions required to run the application code (if any).
@@ -100,7 +111,7 @@ We specialize some of the terms "measurement", "measurement procedure", and "ope
 
   One may over-specify operating conditions without changing the reproducibility status.
   E.g., one might say their software requires GCC 12, but really GCC 12 or 13 would work.
-  It can be difficult and often not necessary to know the necessary-and-sufficient set of operating conditions, so in practice, we usually have set of conditions that is sufficient but not necessary to operate the experiment.
+  It can be difficult and often not necessary to know the necessary-and-sufficient set of operating conditions, so in practice, we usually have a set of conditions that is sufficient but not necessary to operate the experiment.
 
   Operating conditions can be eliminated by moving them to the measurement procedure.
   E.g., the program itself contains a copy of GCC 12.
@@ -169,8 +180,8 @@ We specialize some of the terms "measurement", "measurement procedure", and "ope
 
 # Related work
 
-There are many related works that address reproducibility.
-We leverage the definitions and framework discussed above to contextualize each work.
+There is much related work that address reproducibility.
+I leverage the definitions and framework discussed above to contextualize each work.
 Still, there are significant gaps in prior work that this work exploits.
 Prior work can be divided into these categories, which we investigate in turn:
 
@@ -211,7 +222,7 @@ Replicability was defined later as
 >
 > --- [@rougierSustainableComputationalScience2017]
 
-The ACM opted to use the terms as they were defined in metrology, which resulted in the same definitions being applied to opposite words as Claerbout and Karrenbach [@herouxCompatibleReproducibilityTaxonomy2018, @plesserReproducibilityVsReplicability2018].
+The ACM opted to use the terms as they were defined in metrology [@InternationalVocabularyMetrology2012], which resulted in the same definitions being applied to opposite words as Claerbout and Karrenbach [@herouxCompatibleReproducibilityTaxonomy2018, @plesserReproducibilityVsReplicability2018].
 However, the ACM revised their definitions to be compatible with Claerbout and Karrenbach in 2020 [@acminc.staffArtifactReviewBadging2020], so the definitions are mostly in consensus.
 
 <!-- TODO:
@@ -221,6 +232,7 @@ Patil et al. clarify these definitions and model them mathematically in a (\\sig
 ### Empirical characterization of reproducibility
 
 This group of related work seeks to characterize the degree of reproducibility or a proxy for reproducibility in a sample of CSEs empirically ([@tbl:empirical]).
+However, the type of reproducibility assessed varies widely between studies.
 A proxy variable could be "whether the source is available", since this is a necessary but not sufficient condition for reproducibility.
 
 | Publication                                   | N                | Subjects           | Population                     | Repro measurement assessed or proxy variable | Level        |
@@ -234,15 +246,15 @@ A proxy variable could be "whether the source is available", since this is a nec
 | @wangAssessingRestoringReproducibility2021    | 3,740[^w-note]   | Jupyter notebooks  | GitHub                         | Crash-free execution                         | 19%          |
 | @trisovicLargescaleStudyResearch2022          | 2,109[^t-note]   | R scripts          | Harvard Dataverse              | Crash-free execution                         | 12%          |
 
-: Prior works characterizing empirical reproudcibility. {#tbl:empirical}
+: Prior works characterizing empirical reproducibility. {#tbl:empirical}
 
-[^cb-note]: We consider the total sample to be only those papers whose results were backed by code, did not require special hardware, and were not excluded due to overlapping author lists, since those are the only ones Collberg and Proebsting attempted to reproduce. I am considering OK<30 and OK>30 as "reproducible crash-free building" because codes labelled OK>Author were not actually reproduced on a new system [@collbergRepeatabilityComputerSystems2016].
+[^cb-note]: I consider the total sample to be only those papers whose results were backed by code, did not require special hardware, and were not excluded due to overlapping author lists, since those are the only ones Collberg and Proebsting attempted to reproduce. I am considering OK<30 and OK>30 as "reproducible crash-free building" because codes labelled OK>Author were not actually reproduced on a new system [@collbergRepeatabilityComputerSystems2016].
 
-[^t-note]: We consider the total samples to be the set of *un-repaired* codes, since those are the ones that actually exist publicly. Also, we *include* codes for which the time limit was exceeded; reproduction was attempted and not successf in those conditions.
+[^t-note]: I consider the total samples to be the set of *un-repaired* codes, since those are the ones that actually exist publicly. Also, we *include* codes for which the time limit was exceeded; reproduction was attempted and not successf in those conditions.
 
-[^p-note]: We consider the total sample to be only notebooks that were valid, pure Python, and had an unambiguous order, since those are the ones Pimentel et al. attempt to reproduce [@pimentelLargeScaleStudyQuality2019.]
+[^p-note]: I consider the total sample to be only notebooks that were valid, pure Python, and had an unambiguous order, since those are the ones Pimentel et al. attempt to reproduce [@pimentelLargeScaleStudyQuality2019.]
 
-[^w-note]: We consider the total sample to be only notebooks that had dependency information and used Python 3.5 or later, since those are the only ones Wang et al. attempted to reproduce [@wangAssessingRestoringReproducibility2021].
+[^w-note]: I consider the total sample to be only notebooks that had dependency information and used Python 3.5 or later, since those are the only ones Wang et al. attempted to reproduce [@wangAssessingRestoringReproducibility2021].
 
 [^o-note]: This figure is the average normalized "reproducibility score", based on whether the method, data, and experiment, were available. If it were 1, all the papers in the sample would be have method, data, and experiment availability, and if it were 0, none would be.
 
@@ -250,7 +262,7 @@ A proxy variable could be "whether the source is available", since this is a nec
 
 Note that crash-freedom is prevalent because it is the easiest to automatically assess.
 Source-availability requires human-intervention to test, so studies on crash-freedom simply begin from a corpus for which source code is available.
-Note that stdout-equivalence is feasible because Jupyter Notebooks bundle the stdout with the code; otherwise, the stdout is usually thrown away.
+Note that stdout-equivalence may be feasible because Jupyter Notebooks bundle the stdout with the code; otherwise, the stdout is usually thrown away.
 
 Overall, these studies show that reproducibility is a significant problem.
 
@@ -265,7 +277,7 @@ Some of the studies, like Zhao et al., investigate the *reason* why some samples
 | Insufficient metadata                       | 27%                    |
 
 @zhaoWhyWorkflowsBreak2012 remark that provenance could preserve or enable repair for several classes of failures, including unavailability of 3rd party resources and insufficient descriptions.
-We investigate this approach in my proposed work.
+I investigate this approach in my proposed work.
 
 ## Proactively ensuring reproducibility
 
@@ -294,12 +306,12 @@ Remove source artifact archival
 
 ## Scientific clouds
 
-Scientific clouds facilitate reproducibility by replacing a complex set of operating conditions ("install this, configure that") with a single opeting condition: log in to a cloud system.
-The cloud system hosts a controlled environment with t rest of the operating conditions already met.
+Scientific clouds facilitate reproducibility by replacing a complex set of operating conditions ("install this, configure that") with a single operating condition: log in to a cloud system.
+The cloud system hosts a controlled environment with the rest of the operating conditions already met.
 
-However, storing the environments and running executis in them is expensive.
-Either the users have to pay, in which case the computational environment is not "freely accessible", orome institution may sponsor public-access.
-Institutional grants for public-access may be indefinite or it may only last for a certain aunt of time due to funding constraints ([@tbl:sci-clouds]).
+However, storing the environments and running executions in them is expensive.
+Either the users have to pay, in which case the computational environment is not "freely accessible", or some institution may sponsor public-access.
+Institutional grants for public-access may be indefinite or it may only last for a certain amount of time due to funding constraints ([@tbl:sci-clouds]).
 
 \renewcommand{\arraystretch}{1.5}
 
@@ -308,7 +320,7 @@ Institutional grants for public-access may be indefinite or it may only last for
 | Binder                        | mybinder.org         | 2018 -- present         | @jupyterBinder20Reproducible2018                    |
 | Chameleon Cloud (federated)   | chameleoncloud.org   | 2015 --resent           | @keaheyLessonsLearnedChameleon2020                  |
 | PhenoMeNal portal             | phenomenal-h2020.eu  | 2017 -- 2023            | @petersPhenoMeNalProcessingAnalysis2019             |
-| WholeTal                      | WholeTale.org        | 2016 -- present         | @brinckmanComputingEnvironmentsReproducibility2019a |
+| WholeTale                     | WholeTale.org        | 2016 -- present         | @brinckmanComputingEnvironmentsReproducibility2019a |
 | GridSpace2                    | gs2.plgrid.pl        | 2015 -- 2020            | @ciepielaGridSpace2VirtualLaboratory2012            |
 | Collage Authoring Environment | collage.elsevier.com | 2013 -- 2014            | @nowakowskiCollageAuthoringEnvironment2011          |
 | RunMyCode                     | RunMyCode.org        | 2012 -- 2024            | @stoddenRunMyCodeorgNovelDissemination2012          |
@@ -350,11 +362,11 @@ Digital notebooks facilitate reproducibility by:
 
 - encoding the measurement itself, which may otherwise be printed to `stdout` and not distributed.
 - encoding the explanation for the measurement procedure, making it easier to adapt if errors or difference arise.
-- automating data analysis steps that would otherwise by typed into an interpreter and n saved.
+- automating data analysis steps that would otherwise by typed into an interpreter and not saved.
 
 However, digital notebooks still require a separate way of specifying the software environment (operating conditions).
 Repo2docker, famously used by the scientific cloud Binder, standardizes a way of specifying the software environment for notebooks contained in a repository by leveraging off-the-shelf package managers [@jupyterBinder20Reproducible2018].
-We discuss package managers as a solution foreproducibility later on; the pointtill stands that literate programming requires other methods to manage the soware environment in order to attain reproducibility.
+I discuss package managers as a solution foreproducibility later on; the point still stands that literate programming requires other methods to manage the software environment in order to attain reproducibility.
 
 <!-- TO:
 
@@ -363,11 +375,10 @@ We discuss package managers as a solution foreproducibility later on; the pointt
 - S. Li-Thiao-T. Literate program execution for reproducible research and executable papers. Procedia CS, 9:439–448, 2012
 - D. Koop, E. Santos, PMates, H. T. Vo, P. Bonnet, B. Bauer, B. Surer, M. Troyer, D. N. Williams, J. E. Tohline, J. Freire, and C. T. Silva. A provenance-based infrastructure to support the life cycle of executable papers. Procedia CS, 4:648–657, 2011 -->
 
-### Source code archival
+### Source code archive
 
-Source code archives ([@tbl:source-archival]) facilitate reproducibity by making operating conditions namable and satisfiable.
-Giving software and software versions a unique identifier makes the operating conditions explicitly namable.
-Namability approaches include Digital Object IdentifiersDOI), Archival Resource Key (ARK), Uniform Resource Names (URNs), and persistt URLs (PURLs).
+Source code archives ([@tbl:source-archival]) facilitate reproducibility by making operating conditions namable and satisfiable.
+Namability approaches include Digital Object Identifiers (DOI), Archival Resource Key (ARK), Uniform Resource Names (URNs), and persistent URLs (PURLs).
 
 <!-- TODO: Citations or table
 
@@ -389,15 +400,15 @@ Archiving old versions of core software helps conditions remain satisfiable, sin
 \renewcommand{\arraystretch}{1}
 
 Storing source code in central archives shares some of the disavdantages of scientific clouds, but to a lesser extent.
-Merely storing scientific software is much easier than offering to execute them on-demand.
-Indeed, all of the source archival solutions we found in prior literature are still alive today; the same cannot be said for scientific clouds.
+Merely storing scientific software is much easier than offering to execute it on-demand.
+Indeed, all of the source archiving solutions we found in prior literature are still alive today; the same cannot be said for scientific clouds.
 
 While source code archival does help with unfulfillable conditions, it still requires someone or something to actually set up, configure, build, and install the source code to actually satisfy the condition "install this version of that software".
 Other methods should work in concert, falling back on source code archival if the code is no longer available from the original hoster.
 
 ### Workflow managers
 
-A workflow manager is a system that executes a directed acyclic graph of loosely coupled, coarse nodes.
+A workflow manager is a system that executes a directed graph of loosely coupled, coarse nodes.
 Usually, each node is a process and each edge is a file.
 
 Workflow managers facilitate reproducibility by:
@@ -405,15 +416,15 @@ Workflow managers facilitate reproducibility by:
 - Explicitly stating parts of the measurement procedure that would otherwise be unwritten (which script to run, in what order)
 - Letting systems reason about the inputs and outputs of the measurement procedure
 
-Mölder et al. [@molderSustainableDataAnalysis2021] give classify workflow engines by their interface ([@tbl:wfs]) which we extend.
+Mölder et al. [@molderSustainableDataAnalysis2021] classify workflow engines by their interface ([@tbl:wfs]) which we extend.
 The interface can be graphical, a library in a general purpose language (GPL), a domain specific language (DSL), or a data definition language (such as YAML).
-We reclassified the workflow managers in Mölder's system-independent class, since that does not refer to the interface, and we added other common workflow managers that have more than 1 workflow example in the registries listed in <https://workflows.communities/registries>
+I reclassified the workflow managers in Mölder's system-independent class, since that does not refer to the interface, and we added other common workflow managers.
 
 | Workflow Manager                         | Interface                |
 |------------------------------------------|--------------------------|
 | Galaxy                                   | Graphical                |
 | KNIME                                    | Graphical                |
-| Scipion                                  | Grpahical                |
+| Scipion                                  | Graphical                |
 | COMPS (in Java)                          | Library in GPL           |
 | Parsl (in Python)                        | Library in GPL           |
 | Dask (in Python)                         | Library in GPL           |
@@ -425,7 +436,7 @@ We reclassified the workflow managers in Mölder's system-independent class, sin
 | Bpipe                                    | DSL                      |
 | Common Workflow Language (CWL) (in YAML) | Data Definition Language |
 
-: Common workflow managers classified by interface. More available here: <https://github.com/meirwah/awesome-workflow-engines> {#tbl:wfs}
+: Common (more than 1 example in any registry on <https://workflows.communities/registries>) workflow managers classified by interface. DSL stands for "Domain-Specific Language", and GPL stands for "General-Purpose Language". More workflow managers available here: <https://github.com/meirwah/awesome-workflow-engines> {#tbl:wfs}
 
 <!-- KNIME: bertholdKNIMEKonstanzInformation2009 -->
 
@@ -442,7 +453,7 @@ Workflows can be subjectively evaluated based on clarity, well-formedness, predi
 <!-- | WINGS                               | Declarative    |                  | -->
 
 Workflow managers often represent a departure from what the user is currently doing, and therefore take significant effort to adopt.
-Aditionally, workflow managers introduce another dependency which needs to be managed with another reproducibility strategy.
+The dependency problem may be worsened because  workflow managers introduce another dependency to be managed.
 
 <!-- TODO:
 
@@ -450,8 +461,11 @@ Aditionally, workflow managers introduce another dependency which needs to be ma
 
 ### Provenance
 
-Computational provenance (henceforth, **provenance**) is the processes that generated a computational artifact, the inputs to that provenance, and the provenance of those inputs (recursively) [@freireProvenanceComputationalTasks2008].
+Computational provenance (henceforth, **provenance**) of a computational artifact is the processes that generated the computational artifact, the inputs to that provenance, and the provenance of those inputs (recursively).
+See @fig:prov for example.
 Provenance facilitates reproducibility by explicitly stating the inputs (operating conditions).
+
+![Example of a provenance graph for `D.txt`. It includes the process that generates `D.txt` (in this case `head`), the inputs to that process (in this case `B.txt` and `C.txt`), and the provenance of `B.txt` and `C.txt`.](./dataflow.svg){#fig:prov width=30%}
 
 There are four levels at which one can capture computational provenance [@freireProvenanceComputationalTasks2008] ([@tbl:provs]):
 
@@ -463,7 +477,7 @@ There are four levels at which one can capture computational provenance [@freire
 | Provenance system | Level                           |
 |-------------------|---------------------------------|
 | REDUX             | Workflow-level                  |
-| Swift             | Worfklow-level                  |
+| Swift             | Workflow-level                  |
 | VisTrails         | Workflow-level                  |
 | Kepler            | Workflow-level                  |
 | Taverna           | Workflow-level                  |
@@ -487,6 +501,7 @@ These methods help reproducibility, but they do not deliver "push button" reprod
 
 noWorkflow attempts to capture provenance for arbitrary Python programs [@murtaNoWorkflowCapturingAnalyzing2015].
 Python provenance could be useful for projects whose data processing is primarily Python, however it would not be able to track data past that boundary.
+Many computational experiments involve dataflow between multiple processes (e.g., a shell script).
 
 ### Record/replay tools
 
@@ -506,12 +521,12 @@ The reproducibility package can be stored or distributed, and later on, the user
 | PASS          | Kern. mod.            |
 | CamFlow       | Kern. mod.            |
 
-While record/replay is a convenient user-interface, none of the implementations are fast and run without super user.
-Scientific users rarely have super user privileges on shared hardware; root "in container" is not strong enough to install kernel modules or eBPF programs.
+While record/replay is a convenient user-interface, none of the implementations are fast and run without super user access.
+Scientific users rarely have super user privileges on shared hardware; root "in container" is not strong enough to install kernel modules or eBPF (extended Berkely Packet Filter) programs.
 The overhead of conventional record/replay tools is often more than 2x, making them infeasible to use in many cases.
 
 One might argue that record/replay "allows" users to be messy and merely preserves the mess perfectly [@douglasthainTechniquesPreservingScientific2015].
-Simply copying the entire filesystem, for example, may work (the operating conditions are likely contained in the filesystem), but an entire filesystem inconvenient to transfer, compose, and execute.
+Simply copying the entire filesystem, for example, may work (the operating conditions are likely contained in the filesystem), but an entire filesystem is inconvenient to transfer, compose, and execute.
 An ideal record/replay tool should allow users to introspect and simplify their computational environment.
 
 ### Virtualization and containerization
@@ -524,7 +539,7 @@ On non-Linux hosts, the container is nested inside a virtualized Linux instance.
 Containerization has weaker isolation than system virtualization but better performance and lower storage.
 Container engines include Docker, Podman, and Singularity.
 
-In either case, either the system image has to be distributed (VM image, Docker image, etc.) or instructions to build the system image (e.g., `Vagrantfile`, `Dockerfile`, `Singularityfile`, etc.).
+In either case, either the system image (VM image, Docker image, etc.) or instructions to build the system image (e.g., `Vagrantfile`, `Dockerfile`, `Singularityfile`, etc.) has to be distributed.
 
 - Distributing the image is difficult because it is large, expensive to store, and expensive to transfer.
   DockerHub, a popular storage space for Docker images, recently changed their policy to remove images that had not been pulled or pushed in the past six months [@demorlhonScalingDockersBusiness2020], although enforcement was delayed until 2021 [@demorlhonDockerHubImage2020].
@@ -630,9 +645,10 @@ https://dl.acm.org/doi/pdf/10.1145/3180155.3180181?casa_token=8zmvHNuOG3MAAAAA:F
 - Prior work of https://web.archive.org/web/20220119115703/http://reproducibility.cs.arizona.edu/v2/RepeatabilityTR.pdf
 - http://reproducibleresearch.net/ -->
 
-# My research strategy
+<!--
+# Completed work
 
-Good research begins by investigating the empirical evidence and investigating the theoretical underpinnings.
+I began by investigating the empirical evidence and investigating the theoretical underpinnings.
 By looking at both, one can begin to identify the problems and solutions.
 Empirical study of reproducibility should include not only the rate of ir/reproducibility but the reasons for irreproducibility.
 Future work should target only the most common reasons.
@@ -646,27 +662,35 @@ Once the provenance is produced, one can easily create a replication package tha
 A record/replay tool addresses achieves a high-level of reproducibility, according to our theoretical framework, with a little amount of effort.
 Almost no instruction is necessary to reproduce the software.
 Not only does record/replay increase reproducibility, it addresses one of the most common reasons against sharing source (difficulty of answering questions about how to reproduce the software).
+-->
 
 <!-- TODO: proactive/reactive -->
 
-There are numerous applications for provenance (workflow conversion, incremental computation), <!-- TODO: cite --> so the provenance tracer should connect with existing provenance standards and provenance applications to form a suite of related tools.
+<!--
+There are numerous applications for provenance (workflow conversion, incremental computation), <!-- TODO: cite --> <!--so the provenance tracer should connect with existing provenance standards and provenance applications to form a suite of related tools.
 
 Finally, the provenance tracer should be validated through user studies or case studies.
 Unexpected problems and invalidated assumptions often arise when trying to convert research into practice [@besseyFewBillionLines2010].
 Trying to apply to practice makes my research more impactful and gives me novel problems and assumption-sets to operate in.
+-->
 <!-- TODO: Cite Translational CS -->
 
-# Completed work
+# My completed work
 
-In this section, I outline my completed work on this subject.
+In this section, I outline my completed work on this subject (@fig:work).
 
-## Lifetime of workflows in sample
+![My prior and proposed work. The prior work is green and double-circled; the proposed work is orange.](./my_work.svg){#fig:work width=100%}
 
-We attempted to run workflows in two large registries: Snakemake Workflow Catalog (SWC) and nf-core [@graysonAutomaticReproductionWorkflows2023].
-Of these, about half had at least one non-crashing revision [@tbl:crashes].
+## Examining automatic reproductions of workflows
+
+This section summarizes "Samuel Grayson, Darko Marinov, Daniel S. Katz, and Reed Milewicz. 2023. _Automatic Reproduction of Workflows in the Snakemake Workflow Catalog and nf-core Registries_. In Proceedings of the 2023 ACM Conference on Reproducibility and Replicability (ACM REP '23). Association for Computing Machinery, New York, NY, USA, 74–84. <https://doi.org/10.1145/3589806.3600037>"
+
+We attempted to automatically run run a large corpus of workflows.
+We used two workflow registries listed on <https://workflows.community/>, in particular: Snakemake Workflow Catalog (SWC) and nf-core [@graysonAutomaticReproductionWorkflows2023].
+Of these, about half had at least one non-crashing revision (@tbl:crashes).
 For those whose most recent revision did not crash, we looked how far back we could go before we found a crashing revision.
 Evaluating old software today approximates the failure rate of evaluating today's software in the future.
-We found that workflows had a median failure rate of a couple of years [@fig:survival].
+We found that workflows had a median failure rate of a couple of years (@fig:survival).
 
 | Quantity                                               | All | SWC | nf-core |
 |--------------------------------------------------------|-----|-----|---------|
@@ -679,8 +703,8 @@ We found that workflows had a median failure rate of a couple of years [@fig:sur
 
 ![Survival curve analysis of workflows](SurvivalCurveUpdated.png){#fig:survival width=50%}
 
-When the workflows failed, we classified the crash reason [@tbl:wf-failures].
-The most common kind of crash is simply a missing input.
+When the workflows failed, we classified the crash reason (@tbl:wf-failures).
+The most common reason is simply a missing input.
 The workflow manager could not help in this case, because the missing input is not an internal node, but a top-level node, where the workflow manager would read a file from the outside system.
 Provenance tracing could help automatically upload inputs that a workflow needs to run.
 
@@ -701,19 +725,28 @@ Provenance tracing could help automatically upload inputs that a workflow needs 
 
 : Workflow failure reasons {#tbl:wf-failures}
 
-## Literature review and evaluation of record/replay tools
+**Conclusion:** we learn that while workflows, containers, and package managers are useful, errors can still persist in their use. For example, the workflows may refer to Singularity images that no longer exist.
+We learn that missing input data is a the most common error cause, so any approach attempting to improve automatic reproducibility should address that.
+
+## Review of system-level provenance tracers tools
+
+This section summarizes "Samuel Grayson, Faustino Aguilar, Reed Milewicz, Daniel S. Katz, and Darko Marinov. 2024. _A benchmark suite and performance analysis of user-space provenance collectors_. In Proceedings of the 2nd ACM Conference on Reproducibility and Replicability (ACM REP '24). Association for Computing Machinery, New York, NY, USA, 85–95. <https://doi.org/10.1145/3641525.3663627>"
 
 We executed a rapid literature review to systematically search for system-level provenance collectors in prior literature [@graysonBenchmarkSuitePerformance2024].
 We arrived at a list of 45, and then:
 
-- Selected only thsoe that worked for Linux (39).
+- Selected only those that worked for Linux (39).
 - From those, selected those which did not use VMs (37).
 - From those, selected those which did not require source-code recompilation (35).
 - From those, selected those which did not require special hardware (31).
 - From those, selected those which had source code available (20).
 - From those, selected those which did not require a custom kernel (15).
 - From those, attempted to reproduce 10.
-- From those, selected those which successfully completed all of the benchmarks (5): ReproZip, strace, fsatrace, CARE, and RR.
+- From those, selected those which successfully completed all of the benchmarks (5): ReproZip, strace, fsatrace, CARE, and RR-debugger.
+
+Note that RR-debugger, strace, fsatrace, and CARE are not true system-level provenance collectors, because they do not export a provenance graph.
+RR-debugger and CARE allow automatic replay of the recording, while strace and fsatrace do not; the latter two are strictly "informational".
+In the interest of having a more complete benchmark set, we cast a wide net and include these provenance-adjacent projects.
 
 Unfortunately, there is no standard set of benchmarks used to evaluate system-level provenance tracers.
 Therefore, we also extracted all of the benchmarks used in any work returned by this search ([@tbl:bmarks]).
@@ -742,10 +775,6 @@ Therefore, we also extracted all of the benchmarks used in any work returned by 
 Between these five, we ran the extracted benchmarks in the provenance tracers ([@tbl:perf]).
 We measured the percent overhead from native case, so a value of 50% means the new runtime would be the native runtime times 1.5.
 We can see that none of the existing provenance collectors are fast enough for practical use, except for fsatrace.
-The salient difference is that the other provenance tracers use ptrace to capture the underlying calls, while fsatrace uses `LD_PRELOAD`.
-ptrace involves four context switches on every system call: one from the tracee to the kernel, one from the kernel to the tracer, one from the tracer to the kernel, and one from the kernel to the tracee.
-`LD_PRELOAD` involves *no* extraneous context switches.
-Therefore, we build on the underlying technology of fsatrace in our future work.
 
 | Benchmark        | Native | fsatrace | CARE | strace | RR  | ReproZip |
 |------------------|--------|----------|------|--------|-----|----------|
@@ -762,9 +791,29 @@ Therefore, we build on the underlying technology of fsatrace in our future work.
 
 : Performance of different provenance collectors. {#tbl:perf}
 
+The salient difference is that the other provenance tracers use ptrace to capture the underlying calls, while fsatrace uses `LD_PRELOAD`.
+ptrace involves two context switches on every system call, because the tracee and tracer occupy two separate processes [@fig:ptrace].
+`LD_PRELOAD` involves *no* extraneous context switches, because the tracee and tracer occupy the same process [@fig:lib-interpose].
+Therefore, we build on the underlying technology of fsatrace in our future work.
+
+![Tracing an `open` syscall using `ptrace`](./ptrace.svg){#fig:ptrace width=40%}
+
+![Tracing an `open` syscall using library interpositioning](./lib_interpose.svg){#fig:lib-interpose width=40%}
+
+**Conclusion**: System-level provenance tracers in prior work either require super-user access or are two slow for practical use.
+However, library interpositioning is a promising direction to avoid both issues.
+
 # Proposed work
 
+See the single-circled nodes in @fig:work.
+
 After having gathered empirical evidence on why CSEs fail to be reproducible and gathered evidence on state-of-the-art provenance tracers, it is time to set off on future work.
+
+- 2025 Dec 01: stablize PROBE's core funcitonality
+- 2025 Dec 20: stabalize reproduced C&P dataset
+- 2025 Jan 14: USENIX ATC '25 submission deadline (PROBE)
+- 2025 Mar 22 (expected): ICSE '25 submission deadline (reproduce C&amp;P)
+- 2025 May 28 (expected): eScience '25 submission deadline (PROBE @ Sandia)
 
 ## Provenance & Replay Observation Engine (PROBE)
 
@@ -784,19 +833,32 @@ Both of which will be compared relative to other record/replay tools
 
 Eventually, I want to put PROBE to use in practice at Sandia National Labs, perhaps writing an experience report about translating research into practice.
 
-## Automatic environment manipulation
+<!-- ## Automatic environment manipulation -->
 
-It is more convenient to *preserve* reproducibility, there are important works for which we must do the more difficult task of *restoring* reproducibility.
-In these cases, we can try automated methods to restore reproducibility.
-The most obvious thing to try is mutating the software environment and trying again.
-Perhaps the approach can be augmented with PROBE, which will reveal which parts of the software environment are being accessed.
+<!-- It is more convenient to *preserve* reproducibility, there are important works for which we must do the more difficult task of *restoring* reproducibility. -->
+<!-- In these cases, we can try automated methods to restore reproducibility. -->
+<!-- The most obvious thing to try is mutating the software environment and trying again. -->
+<!-- Perhaps the approach can be augmented with PROBE, which will reveal which parts of the software environment are being accessed. -->
 
-A tool that automatically manipulates the software environment could also be used to test the sensitivity of CSEs to software versions.
-Prior work shows that changing the software environment has approximately the same effect as changing the rounding mode for their particular CSE [@vilaImpactHardwareVariability2024].
-It would be interesting to generalize this to other CSEs.
-Perhaps this could even be used as a method to empirically validate uncertainty quantification estimates produced using other methods.
+<!-- A tool that automatically manipulates the software environment could also be used to test the sensitivity of CSEs to software versions. -->
+<!-- Prior work shows that changing the software environment has approximately the same effect as changing the rounding mode for their particular CSE [@vilaImpactHardwareVariability2024]. -->
+<!-- It would be interesting to generalize this to other CSEs. -->
+<!-- Perhaps this could even be used as a method to empirically validate uncertainty quantification estimates produced using other methods. -->
 
-<!-- ## Reproducibility in computer systems research -->
+## Reproducibility in computer systems research
+
+Collberg and Proebsting attempt a large-scale reproduction of the crash-free build-environments used in artifacts from publications in top CS journals and conferences [@collbergRepeatabilityComputerSystems2016].
+They find that source availability is the dominant issue preventing reproducibility, and labor required to package a prominent reason for source non-availability.
+
+Has the landscape changed since then? What is the decay rate of the artifacts gathered by Collberg and Proebsting? Like the [@graysonAutomaticReproductionWorkflows2023], one could estimate the decay rate from two years-apart samples.
+
+Of particular interest to me, how well would PROBE be able to snapshot and reproduce the executions? We sought to interpose all relevant library calls we could find, but perhaps we missed some. This could be evaluated by repeating the build from the PROBE recording on a new machine without internet access.
+
+## PROBE @ Sandia: Experience report
+
+An experience report of actually using PROBE at Sandia National Labs would bolster my research portfolio by showing that PROBE can actually work in practice. The claims of automatic containerized replay is somewhat advanced, so some reviewers may be reluctant to believe it until they see it.
+
+Additionally, this application would demonstrate my ability to bring research ideas over the "valley of death" into practice. Research is valuable as research, but it can be more valuable if it impacts practice in some way. I want translational computer science (translating ideas from theory to practice) to be a major theme in my future career.
 
 <!--
 
@@ -823,13 +885,6 @@ What impact can be expected in terms of particular research communities and on s
 
 How likely are the stated goals to be achieved by the candidate?
 -->
-
-## Timeline
-
-- Complete PROBE functionality 2024 Nov 31.
-- Deploy PROBE in practice 2024 Jan 31.
-- Automatic environment manipulation 2024 Apr 31.
-- Collberg & Proebsting reproduction 2024 Apr 31.
 
 # Bibliography
 

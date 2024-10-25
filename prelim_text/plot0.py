@@ -45,10 +45,11 @@ for axis_min, axis_max, symbol, transform in [
 fig.savefig("plot0.pdf")
 fig.savefig("plot0.svg")
 
-for seg in [*line, *baseline, *baseline_dot]:
-    seg.remove()
-
 line = ax.plot(xs, new_curve(xs), label="with reproducibility tools")
 baseline     = ax.plot([xmid, xmid], [0, new_curve(xmid)], color="black", linestyle="--")
 baseline_dot = ax.plot([xmid      ], [   new_curve(xmid)], color="black", marker="o")
+fig.savefig("plot01.svg")
+
+for seg in [*line, *baseline, *baseline_dot]:
+    seg.remove()
 fig.savefig("plot1.svg")

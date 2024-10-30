@@ -68,7 +68,7 @@ The ACM definition for **reproducibility** reads,
 >
 > --- [@acminc.staffArtifactReviewBadging2020]
 
-**Experimental setup** encompasses the aforementioned measurment procedure, measuring system, and operating conditions.
+**Experimental setup** encompasses the aforementioned measurement procedure, measuring system, and operating conditions.
 
 While reproducibility involves as a different team using the same experimental setup, there are similar terms to describe the other possible cases.
 

@@ -1,6 +1,6 @@
 ---
 # pandoc -i README.md -o README.pdf --standalone --filter=pandoc-crossref --citeproc --number-sections --strip-comments
-title: How to enable inexpensive reproducibility for computational experiments
+title: How to get reproducible computational experiments
 author: Samuel Grayson
 date: 2024 Oct 03
 bibliography: zotero.yaml
@@ -886,6 +886,18 @@ What impact can be expected in terms of particular research communities and on s
 How likely are the stated goals to be achieved by the candidate?
 -->
 
+# Conclusion
+
+Reproducing experiments is an inherent part of the scientific method.
+The advent of computational should theoretically make it eaiser for experiments to be much more reproducible, but in practice, reproducibility even for computational experiments is much easier said than done.
+This thesis characterizes the problem and identifies the contributing factors to irreproducibility.
+Then it procedes to develop a tool targeting those factors.
+Finally, it applies that tool in practice in two contexts: a national lab and a large-scale reproduction of prior work.
+
+If it succeeds, it should change the tradeoff between reproducibility and effort.
+By spending no _additional_ effort, perhaps more computational experiments will be reproducible.
+More reproducible experiments leads to better science.
+
 # Bibliography
 
 <!--
@@ -907,5 +919,13 @@ Empirical studies of repro
 - Send draft
 - Email Tim re PROBE
 - Find prior art definitions
+
+
+PROBE records whole trace of edits for notebooks.
+For perfect users, that's often too much, but not all users are perfect.
+- https://github.com/mkery/Verdant
+- https://dataflownb.github.io/
+- https://marimo.io/
+- https://github.com/mediar-ai/screenpipe
 
 -->

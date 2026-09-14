@@ -19,7 +19,7 @@ link-citations: true
 Reproducibility is essential to scientific experiments for three reasons:
 
 1. The scientific community corrects false claims by applying scrutiny to judge past results.
-   Scurtinizing an experiment often involves reproducing it, possibly with novel parameters.
+   Scrutinizing an experiment often involves reproducing it, possibly with novel parameters.
    A reproducible experiments is easier to scrutinize, and therefore more likely to be correct, all else equal.
 
 2. Science works by building off of the work of others.

@@ -276,3 +276,4 @@
         {2.3ex \@plus.2ex}%
     {\normalfont\bfseries\fontsize{12pt}{14.4pt}\selectfont\centering}}%
 }
+

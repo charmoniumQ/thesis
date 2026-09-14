@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/black.min.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>System-level provenance tracers</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [['\\(','\\)']],
+          displayMath: [['\\[', '\\]']],
+        },
+      });
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <section>
+            <h1>Who am I?</h1>
+            <p>Samuel Grayson, CS PhD student</p>
+            <p><a href="https://samgrayson.me">samgrayson.me</a>, <a href="mailto:grayson5@illinois.edu">grayson5@illinois.edu</a></p>
+            <p>Use prov tracing to get reproducible computational experiments</p>
+          </section>
+          <section>
+            <h1>Assumptions</h1>
+            <p class="fragment">Research software should be FAIR</p>
+            <p class="fragment">Reproducibility is important</p>
+          </section>
+          <section>
+            <h1>Use-cases</h1>
+            <ul>
+              <li class="fragment">Self to update outputs</li>
+              <li class="fragment">Self to debug differences (prov-diff)</li>
+              <li class="fragment">Self to analyze dataflow</li>
+              <li class="fragment">Others to scrutinize results (replay with mod.)</li>
+              <li class="fragment">Self/others to assign credit</li>
+            </ul>
+          </section>
+          <section>
+            <h1>Requirements</h1>
+            <p class="fragment">Prov-tracing should be transparent to users</p>
+            <p class="fragment">Prov-tracing should be language-independent</p>
+            <p class="fragment">Prov-tracing should go across processes</p>
+            <p class="fragment">Therefore, sys-level, prov tracing (min. assumptions)</p>
+          </section>
+          <section>
+            <h1>Prior work</h1>
+            <p>
+              Existing sys-level prov tracers: ptrace, kernel mod., eBPF.
+              <ul>
+                <li class="fragment">ptrace is too slow (2.5x overhead)</li>
+                <li class="fragment">Kernel mod. has security problems</li>
+                <li class="fragment">eBPF requires bare-metal privileges</li>
+              </ul>
+            </p>
+          </section>
+          <section>
+            <h1>PROBE: Provenance for Replay OBservation Engine</h1>
+            <p class="fragment"><a href="https://github.com/charmoniumQ/PROBE">GitHub</a></p>
+            <p class="fragment">Brief demo</p>
+          </section>
+          <section>
+            <h1>Open questions</h1>
+            <p class="fragment">Provenance should be executable</p>
+            <p class="fragment">PROV, OPMW, ProvONE+, wfprov, WRROC, &hellip;?</p>
+            <p class="fragment">How to layer provenance?</p>
+            <p class="fragment">Lightweight provenance?</p>
+          </section>
+          <section>
+            <h1>Conclusions</h1>
+            <p class="fragment">Novel sys-level prov. tracer</p>
+            <p class="fragment">Performance analysis (in progress)</p>
+            <p class="fragment">Want to replay interoperable provenance</p>
+            <p class="fragment">Connect provenance layers</p>
+          </section>
+        </section>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+    <script>
+     /*<![CDATA[*/
+     Reveal.initialize({
+         hash: true,
+         slideNumber: "c/t",
+         transition: "none",
+     });
+     /*]]*/
+    </script>
+  </body>
+</html>
